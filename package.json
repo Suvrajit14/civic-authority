@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch server.ts",
+    "start": "tsx server.ts",
     "client": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "node dist/server.js",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
