@@ -5,7 +5,7 @@ coverage/
 .DS_Store
 *.log
 
-# Environment files
+# Environment files - NEVER commit these
 .env
 .env.local
 .env.production
