@@ -64,7 +64,7 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex" style={{ background: 'linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 50%, #faf5ff 100%)' }}>
+    <div className="min-h-screen flex aurora-bg">
       <Toaster position="top-right" richColors />
 
       {/* Aurora blobs */}
@@ -109,8 +109,7 @@ export default function Auth() {
           {features.map((f, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.08 }}
               whileHover={{ y: -4, scale: 1.02 }}
-              className="rounded-2xl p-4 cursor-default"
-              style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 4px 16px rgba(99,102,241,0.06)' }}>
+              className="rounded-2xl p-4 cursor-default glass-dark">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: f.bg }}>
                 <f.icon className="w-4 h-4" style={{ color: f.color }} />
               </div>
@@ -147,7 +146,7 @@ export default function Auth() {
           </div>
 
           {/* Card */}
-          <div className="rounded-3xl p-8" style={{ background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 8px 40px rgba(99,102,241,0.1)' }}>
+          <div className="rounded-3xl p-8 glass-dark">
             <AnimatePresence mode="wait">
               {/* LOGIN / REGISTER */}
               {(mode === 'login' || mode === 'register') && (
@@ -167,7 +166,7 @@ export default function Auth() {
                       <button key={tab} onClick={() => setMode(tab as Mode)}
                         className="flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 capitalize"
                         style={mode === tab
-                          ? { background: 'white', color: '#6366F1', boxShadow: '0 2px 8px rgba(99,102,241,0.15)' }
+                          ? { background: 'rgba(255,255,255,0.1)', color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.5)' }
                           : { color: 'rgba(161,161,170,0.9)' }}>
                         {tab === 'login' ? 'Login' : 'Register'}
                       </button>
