@@ -188,6 +188,8 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
 
       aiPromiseRef.current = (async () => {
         if (!autoAiVerification) return null;
+        // Add delay to avoid rate limits
+        await new Promise(r => setTimeout(r, 2000));
         setIsValidating(true);
         try {
           const base64Data = dataUrl.includes(',') ? dataUrl.split(',')[1] : dataUrl;
