@@ -8,10 +8,12 @@ let aiInstance: GoogleGenAI | null = null;
 
 function getAI() {
   if (!aiInstance) {
-    // In this environment, GEMINI_API_KEY is injected into process.env
-    const apiKey = process.env.GEMINI_API_KEY;
+    // Works in both Vite dev (import.meta.env) and production build (process.env injected by Vite define)
+    const apiKey = (import.meta as any).env?.VITE_GEMINI_API_KEY
+      || process.env.GEMINI_API_KEY
+      || '';
     if (!apiKey) {
-      throw new Error("AI features are disabled. Please configure your Gemini API key in the AI Studio Secrets panel.");
+      throw new Error('API_KEY_MISSING');
     }
     aiInstance = new GoogleGenAI({ apiKey });
   }
