@@ -14,12 +14,12 @@ export default function LoadingSpinner({ size = 'md', label }: LoadingSpinnerPro
     <div className="flex flex-col items-center justify-center gap-3">
       <div className="relative">
         <div className={`${sizes[size]} border-2 rounded-full animate-spin`}
-          style={{ borderColor: 'rgba(0,255,136,0.15)', borderTopColor: '#00FF88', boxShadow: '0 0 15px rgba(0,255,136,0.2)' }} />
+          style={{ borderColor: 'rgba(99,102,241,0.15)', borderTopColor: '#6366F1' }} />
         <div className="absolute inset-0 flex items-center justify-center">
-          <Shield className={`${iconSizes[size]}`} style={{ color: 'rgba(0,255,136,0.4)' }} />
+          <Shield className={`${iconSizes[size]}`} style={{ color: 'rgba(99,102,241,0.4)' }} />
         </div>
       </div>
-      {label && <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.3)' }}>{label}</p>}
+      {label && <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(26,26,46,0.4)' }}>{label}</p>}
     </div>
   );
 }

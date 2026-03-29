@@ -123,10 +123,10 @@ export default function Dashboard({ user }: DashboardProps) {
   });
 
   const stats = [
-    { label: 'Total Reports', value: issues.length,                                      icon: TrendingUp,   color: '#00FF88', glow: 'rgba(0,255,136,0.25)',  bg: 'rgba(0,255,136,0.1)' },
-    { label: 'Verified',      value: issues.filter(i => i.status === 'Verified').length, icon: CheckCircle2, color: '#00D4FF', glow: 'rgba(0,212,255,0.25)',  bg: 'rgba(0,212,255,0.1)' },
-    { label: 'Pending',       value: issues.filter(i => i.status === 'Pending').length,  icon: Clock,        color: '#FFB800', glow: 'rgba(255,184,0,0.25)',  bg: 'rgba(255,184,0,0.1)' },
-    { label: 'Active Users',  value: activeUsersCount ?? '...',                          icon: Users,        color: '#BF5FFF', glow: 'rgba(191,95,255,0.25)', bg: 'rgba(191,95,255,0.1)' },
+    { label: 'Total Reports', value: issues.length,                                      icon: TrendingUp,   color: '#6366F1', glow: 'rgba(99,102,241,0.2)',   bg: 'rgba(99,102,241,0.08)' },
+    { label: 'Verified',      value: issues.filter(i => i.status === 'Verified').length, icon: CheckCircle2, color: '#10B981', glow: 'rgba(16,185,129,0.2)',  bg: 'rgba(16,185,129,0.08)' },
+    { label: 'Pending',       value: issues.filter(i => i.status === 'Pending').length,  icon: Clock,        color: '#F59E0B', glow: 'rgba(245,158,11,0.2)',  bg: 'rgba(245,158,11,0.08)' },
+    { label: 'Active Users',  value: activeUsersCount ?? '...',                          icon: Users,        color: '#8B5CF6', glow: 'rgba(139,92,246,0.2)',  bg: 'rgba(139,92,246,0.08)' },
   ];
 
   const center: [number, number] = userLocation ?? (filteredIssues.length > 0
@@ -145,15 +145,15 @@ export default function Dashboard({ user }: DashboardProps) {
   }
 
   const STATUS_NEON: Record<string, { bg: string; color: string }> = {
-    All:          { bg: 'rgba(255,255,255,0.1)',   color: 'white' },
-    Pending:      { bg: 'rgba(255,184,0,0.15)',    color: '#FFB800' },
-    Verified:     { bg: 'rgba(0,255,136,0.15)',    color: '#00FF88' },
-    'In Progress':{ bg: 'rgba(0,212,255,0.15)',    color: '#00D4FF' },
-    Resolved:     { bg: 'rgba(0,255,136,0.15)',    color: '#00FF88' },
-    Rejected:     { bg: 'rgba(255,60,172,0.15)',   color: '#FF3CAC' },
+    All:          { bg: 'rgba(99,102,241,0.08)',  color: '#6366F1' },
+    Pending:      { bg: 'rgba(245,158,11,0.1)',   color: '#D97706' },
+    Verified:     { bg: 'rgba(99,102,241,0.1)',   color: '#6366F1' },
+    'In Progress':{ bg: 'rgba(59,130,246,0.1)',   color: '#3B82F6' },
+    Resolved:     { bg: 'rgba(16,185,129,0.1)',   color: '#10B981' },
+    Rejected:     { bg: 'rgba(244,63,94,0.1)',    color: '#F43F5E' },
   };
 
-  const cardStyle = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' };
+  const cardStyle = { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 4px 20px rgba(99,102,241,0.06)' };
 
   return (
     <div className="space-y-5">
@@ -161,10 +161,11 @@ export default function Dashboard({ user }: DashboardProps) {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {stats.map((stat, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}
-            className="rounded-2xl p-4 transition-all duration-200 hover:-translate-y-0.5 cursor-default"
+            whileHover={{ y: -4, scale: 1.01 }}
+            className="rounded-2xl p-4 cursor-default"
             style={cardStyle}>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: stat.bg, boxShadow: `0 0 15px ${stat.glow}` }}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: stat.bg }}>
                 <stat.icon className="w-4 h-4" style={{ color: stat.color }} />
               </div>
               <span className="text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: stat.bg, color: stat.color }}>
@@ -172,8 +173,8 @@ export default function Dashboard({ user }: DashboardProps) {
                 LIVE
               </span>
             </div>
-            <p className="text-2xl font-display font-black text-white tracking-tight">{stat.value}</p>
-            <p className="text-[10px] uppercase tracking-wider font-semibold mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{stat.label}</p>
+            <p className="text-2xl font-display font-black tracking-tight" style={{ color: '#1a1a2e' }}>{stat.value}</p>
+            <p className="text-[10px] uppercase tracking-wider font-semibold mt-0.5" style={{ color: 'rgba(26,26,46,0.4)' }}>{stat.label}</p>
           </motion.div>
         ))}
       </div>
@@ -183,10 +184,10 @@ export default function Dashboard({ user }: DashboardProps) {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#00FF88', boxShadow: '0 0 8px rgba(0,255,136,0.6)' }} />
-              <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#00FF88' }}>Live Feed</span>
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#6366F1', boxShadow: '0 0 8px rgba(99,102,241,0.5)' }} />
+              <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#6366F1' }}>Live Feed</span>
             </div>
-            <h1 className="text-2xl font-display font-black text-white">
+            <h1 className="text-2xl font-display font-black" style={{ color: '#1a1a2e' }}>
               Civic <span className="text-gradient">Intelligence</span>
             </h1>
           </div>
@@ -220,7 +221,7 @@ export default function Dashboard({ user }: DashboardProps) {
           <input type="text" placeholder="Search locations, institutes, descriptions..."
             value={search} onChange={e => handleSearchChange(e.target.value)}
             onFocus={() => setShowSuggestions(true)} onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-            className="w-full rounded-xl py-2.5 pl-10 pr-9 text-sm transition-all input-dark"
+            className="w-full rounded-xl py-2.5 pl-10 pr-9 text-sm transition-all input-field"
           />
           {search && (
             <button onClick={() => { setSearch(''); setLocationSuggestions([]); }}
