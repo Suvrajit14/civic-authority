@@ -43,15 +43,15 @@ export default class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-6">
-          <div className="max-w-md w-full bg-white rounded-3xl p-10 shadow-2xl text-center border border-neutral-200">
+        <div className="min-h-screen bg-zinc-900/50 flex items-center justify-center p-6">
+          <div className="max-w-md w-full glass-dark rounded-3xl p-10 shadow-2xl text-center border border-white/10">
             <div className="w-20 h-20 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-8">
               <AlertCircle className="w-10 h-10 text-red-600" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-neutral-900 mb-4">
+            <h1 className="text-2xl font-bold tracking-tight text-white mb-4">
               {isQuotaExceeded ? 'Daily Limit Reached' : 'Something went wrong'}
             </h1>
-            <p className="text-neutral-500 mb-8 leading-relaxed">
+            <p className="text-zinc-400 mb-8 leading-relaxed">
               {isQuotaExceeded 
                 ? "The application has reached its daily database usage limit (free tier). The quota will reset tomorrow. Please check back then!"
                 : "We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists."}

@@ -98,9 +98,9 @@ export default function Layout({ children, user }: LayoutProps) {
             return (
               <motion.div key={item.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
                 <Link to={item.path}
-                  className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${isActive ? 'nav-active' : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/5'}`}
+                  className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${isActive ? 'nav-active' : 'text-zinc-400 hover:text-zinc-200 hover:glass-dark/5'}`}
                   style={isActive ? { color: item.color } : {}}>
-                  <div className="relative z-10 w-7 h-7 rounded-lg flex items-center justify-center transition-all bg-white/5 group-hover:bg-white/10"
+                  <div className="relative z-10 w-7 h-7 rounded-lg flex items-center justify-center transition-all glass-dark/5 group-hover:glass-dark/10"
                     style={isActive ? { background: `${item.color}20` } : {}}>
                     <item.icon className="w-4 h-4" style={isActive ? { color: item.color } : {}} />
                   </div>
@@ -176,7 +176,7 @@ export default function Layout({ children, user }: LayoutProps) {
             </Link>
           )}
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-cyan-400">
+            className="p-2 rounded-xl glass-dark/5 hover:glass-dark/10 text-cyan-400">
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
@@ -198,7 +198,7 @@ export default function Layout({ children, user }: LayoutProps) {
                       style={isActive
                         ? { background: `linear-gradient(135deg, ${item.color}20, ${item.color}10)`, border: `1px solid ${item.color}30`, color: item.color }
                         : { color: '#a1a1aa', border: '1px solid transparent' }}>
-                      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/5">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center glass-dark/5">
                         <item.icon className="w-4 h-4" style={isActive ? { color: item.color } : {}} />
                       </div>
                       <span className="font-semibold text-sm">{item.label}</span>
@@ -234,7 +234,7 @@ export default function Layout({ children, user }: LayoutProps) {
       </AnimatePresence>
 
       {/* ── MAIN CONTENT ── */}
-      <main className="lg:ml-64 pt-16 lg:pt-0 min-h-screen relative z-10 w-full overflow-hidden">
+      <main className="lg:ml-64 pt-16 lg:pt-0 min-h-screen relative z-10">
         <div className="max-w-7xl mx-auto px-4 py-5 lg:px-8 lg:py-8">
           {children}
         </div>

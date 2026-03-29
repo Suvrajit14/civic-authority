@@ -171,7 +171,7 @@ export default function Dashboard({ user }: DashboardProps) {
               </span>
             </div>
             <p className="text-2xl font-display font-black tracking-tight text-white">{stat.value}</p>
-            <p className="text-[10px] uppercase tracking-wider font-semibold mt-0.5" style={{ color: 'rgba(26,26,46,0.4)' }}>{stat.label}</p>
+            <p className="text-[10px] uppercase tracking-wider font-semibold mt-0.5" style={{ color: 'rgba(161,161,170,0.9)' }}>{stat.label}</p>
           </motion.div>
         ))}
       </div>
@@ -234,7 +234,7 @@ export default function Dashboard({ user }: DashboardProps) {
             const all = [...issueMatches, ...locMatches];
             return (
               <div className="absolute top-full left-0 right-0 mt-1.5 rounded-xl shadow-2xl z-50 overflow-hidden max-h-64 overflow-y-auto"
-                style={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)' }}>
+                style={{ background: '#f4f4f5', border: '1px solid rgba(255,255,255,0.1)' }}>
                 {suggestionsLoading && (
                   <div className="flex items-center gap-2 px-4 py-2.5 text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
                     <Loader2 className="w-3 h-3 animate-spin" /> Searching...
@@ -370,7 +370,7 @@ export default function Dashboard({ user }: DashboardProps) {
                 <Popup>
                   <div className="p-2 max-w-[200px]">
                     <img src={issue.imageUrl} className="w-full aspect-video object-cover rounded-lg mb-2" alt="Issue" />
-                    <p className="text-xs font-semibold text-neutral-800 line-clamp-2 mb-1">{issue.description}</p>
+                    <p className="text-xs font-semibold text-zinc-100 line-clamp-2 mb-1">{issue.description}</p>
                     <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">{issue.status}</span>
                   </div>
                 </Popup>

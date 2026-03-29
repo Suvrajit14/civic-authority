@@ -567,30 +567,30 @@ export default function AdminPanel() {
         className="relative group max-w-5xl mx-auto w-full"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-3xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
-        <div className="relative bg-white border-2 border-neutral-100 rounded-[32px] p-2 flex items-center shadow-2xl shadow-indigo-500/5 group-focus-within:border-indigo-500 group-focus-within:ring-8 group-focus-within:ring-indigo-500/5 transition-all duration-300">
+        <div className="relative glass-dark border-2 border-white/5 rounded-[32px] p-2 flex items-center shadow-2xl shadow-indigo-500/5 group-focus-within:border-indigo-500 group-focus-within:ring-8 group-focus-within:ring-indigo-500/5 transition-all duration-300">
           <div className="pl-8 pr-4">
             <Search className="w-6 h-6 text-neutral-300 group-focus-within:text-indigo-500 transition-colors" />
           </div>
           <input 
             type="text"
             placeholder={t('admin.search_placeholder')}
-            className="flex-1 bg-transparent border-none outline-none py-6 text-xl font-medium text-neutral-900 placeholder:text-neutral-300"
+            className="flex-1 bg-transparent border-none outline-none py-6 text-xl font-medium text-white placeholder:text-neutral-300"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
           {search && (
             <div className="flex items-center gap-4 pr-6">
-              <div className="hidden sm:flex items-center gap-4 border-r border-neutral-100 pr-6">
+              <div className="hidden sm:flex items-center gap-4 border-r border-white/5 pr-6">
                 <button 
                   onClick={() => setActiveTab('issues')}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all ${activeTab === 'issues' ? 'bg-indigo-50 text-indigo-600' : 'text-neutral-400 hover:bg-neutral-50'}`}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all ${activeTab === 'issues' ? 'bg-indigo-50 text-indigo-600' : 'text-neutral-400 hover:bg-zinc-900/50'}`}
                 >
                   <FileText className="w-4 h-4" />
                   <span className="text-[10px] font-black uppercase tracking-widest">{filteredIssues.length}</span>
                 </button>
                 <button 
                   onClick={() => setActiveTab('users')}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all ${activeTab === 'users' ? 'bg-purple-50 text-purple-600' : 'text-neutral-400 hover:bg-neutral-50'}`}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all ${activeTab === 'users' ? 'bg-purple-50 text-purple-600' : 'text-neutral-400 hover:bg-zinc-900/50'}`}
                 >
                   <Users className="w-4 h-4" />
                   <span className="text-[10px] font-black uppercase tracking-widest">{filteredUsers.length}</span>
@@ -598,7 +598,7 @@ export default function AdminPanel() {
               </div>
               <button 
                 onClick={() => setSearch('')}
-                className="p-3 hover:bg-neutral-100 rounded-2xl transition-colors"
+                className="p-3 hover:bg-zinc-800/50 rounded-2xl transition-colors"
                 title={t('admin.clear_search')}
               >
                 <X className="w-5 h-5 text-neutral-400" />
@@ -617,19 +617,19 @@ export default function AdminPanel() {
             </div>
             <span className="text-[11px] font-black uppercase tracking-[0.3em] text-indigo-500">{t('admin.protocol')}</span>
           </div>
-          <h2 className="text-6xl font-display font-black tracking-tighter text-neutral-900 flex items-center gap-4">
+          <h2 className="text-6xl font-display font-black tracking-tighter text-white flex items-center gap-4">
             {t('admin.command_center')}
           </h2>
           <div className="mt-8 flex items-center gap-6">
-            <div className="flex items-center gap-4 bg-white border-2 border-neutral-100 rounded-[28px] px-8 py-4 shadow-xl shadow-indigo-500/5">
+            <div className="flex items-center gap-4 glass-dark border-2 border-white/5 rounded-[28px] px-8 py-4 shadow-xl shadow-indigo-500/5">
               <div className={`w-12 h-6 rounded-full p-1 transition-colors cursor-pointer ${autoAiVerification ? 'bg-emerald-500' : 'bg-neutral-200'}`} onClick={toggleAutoAiVerification}>
                 <motion.div 
                   animate={{ x: autoAiVerification ? 24 : 0 }}
-                  className="w-4 h-4 bg-white rounded-full shadow-sm"
+                  className="w-4 h-4 glass-dark rounded-full shadow-sm"
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-black uppercase tracking-widest text-neutral-900">{t('admin.auto_ai')}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-white">{t('admin.auto_ai')}</span>
                 <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">{autoAiVerification ? t('admin.active') : t('admin.disabled')}</span>
               </div>
             </div>
@@ -645,7 +645,7 @@ export default function AdminPanel() {
               </div>
             </button>
           </div>
-          <p className="text-neutral-500 mt-4 text-xl font-medium max-w-2xl opacity-70">
+          <p className="text-zinc-400 mt-4 text-xl font-medium max-w-2xl opacity-70">
             {t('admin.description')}
           </p>
         </div>
@@ -653,26 +653,26 @@ export default function AdminPanel() {
         <div className="flex flex-col sm:flex-row items-center gap-6">
           {activeTab === 'issues' && (
             <div className="flex flex-col gap-4">
-              <div className="bg-white border-2 border-neutral-100 rounded-[28px] p-1.5 flex shadow-xl shadow-indigo-500/5 overflow-x-auto no-scrollbar max-w-full">
+              <div className="glass-dark border-2 border-white/5 rounded-[28px] p-1.5 flex shadow-xl shadow-indigo-500/5 overflow-x-auto no-scrollbar max-w-full">
                 {['All', 'Pending', 'Verified', 'In Progress', 'Resolved', 'Rejected'].map((f) => (
                   <button
                     key={f}
                     onClick={() => setStatusFilter(f)}
                     className={`px-6 py-2.5 rounded-[20px] transition-all text-[10px] font-black uppercase tracking-widest whitespace-nowrap ${
-                      statusFilter === f ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20' : 'text-neutral-400 hover:text-neutral-600'
+                      statusFilter === f ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20' : 'text-neutral-400 hover:text-zinc-300'
                     }`}
                   >
                     {f === 'All' ? t('admin.all_statuses') : t(`dashboard.${f.toLowerCase().replace(' ', '_')}`)}
                   </button>
                 ))}
               </div>
-              <div className="bg-white border-2 border-neutral-100 rounded-[28px] p-1.5 flex shadow-xl shadow-indigo-500/5 overflow-x-auto no-scrollbar max-w-full">
+              <div className="glass-dark border-2 border-white/5 rounded-[28px] p-1.5 flex shadow-xl shadow-indigo-500/5 overflow-x-auto no-scrollbar max-w-full">
                 {['All', 'Traffic', 'Road', 'Emergency', 'Safety'].map((c) => (
                   <button
                     key={c}
                     onClick={() => setCategoryFilter(c)}
                     className={`px-6 py-2.5 rounded-[20px] transition-all text-[10px] font-black uppercase tracking-widest whitespace-nowrap ${
-                      categoryFilter === c ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20' : 'text-neutral-400 hover:text-neutral-600'
+                      categoryFilter === c ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20' : 'text-neutral-400 hover:text-zinc-300'
                     }`}
                   >
                     {c === 'All' ? t('admin.all_categories') : t(`cat.${c.toLowerCase()}`)}
@@ -682,11 +682,11 @@ export default function AdminPanel() {
             </div>
           )}
           
-          <div className="bg-white border-2 border-neutral-100 rounded-[28px] p-1.5 flex shadow-xl shadow-indigo-500/5">
+          <div className="glass-dark border-2 border-white/5 rounded-[28px] p-1.5 flex shadow-xl shadow-indigo-500/5">
             <button 
               onClick={() => setActiveTab('issues')}
               className={`flex items-center gap-3 px-8 py-3.5 rounded-[22px] transition-all text-[11px] font-black uppercase tracking-[0.2em] ${
-                activeTab === 'issues' ? 'bg-neutral-900 text-white shadow-xl shadow-black/20' : 'text-neutral-400 hover:text-neutral-600'
+                activeTab === 'issues' ? 'bg-neutral-900 text-white shadow-xl shadow-black/20' : 'text-neutral-400 hover:text-zinc-300'
               }`}
             >
               <FileText className="w-4 h-4" />
@@ -695,7 +695,7 @@ export default function AdminPanel() {
             <button 
               onClick={() => setActiveTab('users')}
               className={`flex items-center gap-3 px-8 py-3.5 rounded-[22px] transition-all text-[11px] font-black uppercase tracking-[0.2em] ${
-                activeTab === 'users' ? 'bg-neutral-900 text-white shadow-xl shadow-black/20' : 'text-neutral-400 hover:text-neutral-600'
+                activeTab === 'users' ? 'bg-neutral-900 text-white shadow-xl shadow-black/20' : 'text-neutral-400 hover:text-zinc-300'
               }`}
             >
               <Users className="w-4 h-4" />
@@ -718,18 +718,18 @@ export default function AdminPanel() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-white p-8 rounded-[40px] border-2 border-neutral-100 shadow-xl shadow-indigo-500/5 group cursor-default relative overflow-hidden"
+            className="glass-dark p-8 rounded-[40px] border-2 border-white/5 shadow-xl shadow-indigo-500/5 group cursor-default relative overflow-hidden"
           >
             <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${stat.gradient} opacity-[0.03] rounded-bl-[60px] group-hover:scale-150 transition-transform duration-700`} />
             
             <div className="flex items-center justify-between mb-6">
-              <div className={`p-3 rounded-xl bg-neutral-50 ${stat.color} group-hover:scale-110 transition-transform`}>
+              <div className={`p-3 rounded-xl bg-zinc-900/50 ${stat.color} group-hover:scale-110 transition-transform`}>
                 <stat.icon className="w-6 h-6" />
               </div>
               <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${stat.gradient} animate-pulse`} />
             </div>
             <div className="flex items-baseline gap-3">
-              <span className={`text-5xl font-display font-black tracking-tighter text-neutral-900`}>{stat.value}</span>
+              <span className={`text-5xl font-display font-black tracking-tighter text-white`}>{stat.value}</span>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400">{stat.label}</span>
             </div>
           </motion.div>
@@ -839,19 +839,19 @@ export default function AdminPanel() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white rounded-[40px] border-2 border-neutral-100 shadow-xl shadow-indigo-500/10 overflow-hidden"
+          className="glass-dark rounded-[40px] border-2 border-white/5 shadow-xl shadow-indigo-500/10 overflow-hidden"
         >
           {activeTab === 'issues' ? (
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-neutral-50/50 border-b-2 border-neutral-100">
+                  <tr className="bg-zinc-900/50/50 border-b-2 border-white/5">
                     <th className="p-10 w-20">
                       <input 
                         type="checkbox"
                         checked={selectedIssues.length === filteredIssues.length && filteredIssues.length > 0}
                         onChange={selectAllIssues}
-                        className="w-6 h-6 rounded-lg border-2 border-neutral-200 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer"
+                        className="w-6 h-6 rounded-lg border-2 border-white/10 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer"
                       />
                     </th>
                     <th className="p-10 text-[11px] font-black uppercase tracking-[0.4em] text-neutral-400">{t('admin.report_detail')}</th>
@@ -862,21 +862,21 @@ export default function AdminPanel() {
                 </thead>
                 <tbody className="divide-y-2 divide-neutral-50">
                   {filteredIssues.map((issue, index) => (
-                    <tr key={issue.id} className={`hover:bg-neutral-50/50 transition-all group ${selectedIssues.includes(issue.id) ? 'bg-indigo-50/30' : ''}`}>
+                    <tr key={issue.id} className={`hover:bg-zinc-900/50/50 transition-all group ${selectedIssues.includes(issue.id) ? 'bg-indigo-50/30' : ''}`}>
                       <td className="p-10">
                         <input 
                           type="checkbox"
                           checked={selectedIssues.includes(issue.id)}
                           onClick={(e) => toggleIssueSelection(issue.id, index, e)}
                           onChange={() => {}}
-                          className="w-6 h-6 rounded-lg border-2 border-neutral-200 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer"
+                          className="w-6 h-6 rounded-lg border-2 border-white/10 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer"
                         />
                       </td>
                       <td className="p-10">
                       <div className="flex items-start gap-8">
                         <div className="relative shrink-0">
                           <img src={issue.imageUrl} className="w-32 h-32 rounded-[32px] object-cover border-4 border-white shadow-xl group-hover:scale-105 transition-transform duration-700" alt="Issue" referrerPolicy="no-referrer" />
-                          <div className="absolute -top-3 -right-3 bg-white rounded-2xl p-2 shadow-2xl border-2 border-neutral-50">
+                          <div className="absolute -top-3 -right-3 glass-dark rounded-2xl p-2 shadow-2xl border-2 border-neutral-50">
                             <div className={`w-4 h-4 rounded-full ${issue.isFake ? 'bg-rose-500' : 'bg-emerald-500'} shadow-lg`} />
                           </div>
                         </div>
@@ -885,8 +885,8 @@ export default function AdminPanel() {
                             <span className="px-3 py-1 bg-indigo-500/10 text-indigo-600 rounded-full text-[10px] font-black uppercase tracking-widest">{t(`cat.${(issue.category || 'general').toLowerCase()}`)}</span>
                             <span className="font-mono text-[10px] text-neutral-300 font-bold uppercase tracking-tighter">ID: {(issue.id || '').slice(0, 8)}</span>
                           </div>
-                          <p className="text-lg font-display font-black text-neutral-900 leading-tight tracking-tight">{issue.address}</p>
-                          <p className="text-sm text-neutral-500 line-clamp-2 max-w-md font-medium leading-relaxed opacity-70">{issue.description || t('admin.no_description')}</p>
+                          <p className="text-lg font-display font-black text-white leading-tight tracking-tight">{issue.address}</p>
+                          <p className="text-sm text-zinc-400 line-clamp-2 max-w-md font-medium leading-relaxed opacity-70">{issue.description || t('admin.no_description')}</p>
                           <div className="flex items-center gap-2 text-[10px] text-neutral-400 font-black uppercase tracking-widest">
                             <Activity className="w-3 h-3" />
                             {t('admin.reported')} {formatDistanceToNow(new Date(issue.createdAt), { addSuffix: true })}
@@ -919,7 +919,7 @@ export default function AdminPanel() {
                             {issue.aiConfidence !== undefined ? `${(issue.aiConfidence * 100).toFixed(0)}%` : 'N/A'}
                           </span>
                         </div>
-                        <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden shadow-inner">
+                        <div className="w-full h-2 bg-zinc-800/50 rounded-full overflow-hidden shadow-inner">
                           <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${(issue.aiConfidence || 0) * 100}%` }}
@@ -927,7 +927,7 @@ export default function AdminPanel() {
                             className={`h-full ${issue.aiConfidence && issue.aiConfidence > 0.8 ? 'bg-emerald-500' : 'bg-amber-500'} shadow-lg`}
                           />
                         </div>
-                        <p className="text-[11px] text-neutral-600 leading-relaxed font-medium opacity-80 italic">
+                        <p className="text-[11px] text-zinc-300 leading-relaxed font-medium opacity-80 italic">
                           "{issue.aiReasoning || t('admin.awaiting_ai')}"
                         </p>
                       </div>
@@ -938,14 +938,14 @@ export default function AdminPanel() {
                           <>
                             <button 
                               onClick={() => toggleFakeStatus(issue.id, false)}
-                              className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all shadow-lg hover:-translate-y-1 ${!issue.isFake ? 'bg-emerald-600 text-white' : 'bg-neutral-100 text-neutral-400 hover:bg-emerald-50 hover:text-emerald-600'}`}
+                              className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all shadow-lg hover:-translate-y-1 ${!issue.isFake ? 'bg-emerald-600 text-white' : 'bg-zinc-800/50 text-neutral-400 hover:bg-emerald-50 hover:text-emerald-600'}`}
                               title="Mark as Real"
                             >
                               <ShieldCheck className="w-6 h-6" />
                             </button>
                             <button 
                               onClick={() => toggleFakeStatus(issue.id, true)}
-                              className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all shadow-lg hover:-translate-y-1 ${issue.isFake ? 'bg-rose-600 text-white' : 'bg-neutral-100 text-neutral-400 hover:bg-rose-50 hover:text-rose-600'}`}
+                              className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all shadow-lg hover:-translate-y-1 ${issue.isFake ? 'bg-rose-600 text-white' : 'bg-zinc-800/50 text-neutral-400 hover:bg-rose-50 hover:text-rose-600'}`}
                               title="Mark as Fake"
                             >
                               <ShieldAlert className="w-6 h-6" />
@@ -1007,7 +1007,7 @@ export default function AdminPanel() {
                         )}
                         <button 
                           onClick={() => setDeleteModal({ id: issue.id, isOpen: true })}
-                          className="w-12 h-12 flex items-center justify-center bg-neutral-100 text-neutral-400 rounded-2xl hover:bg-rose-600 hover:text-white transition-all shadow-lg hover:-translate-y-1"
+                          className="w-12 h-12 flex items-center justify-center bg-zinc-800/50 text-neutral-400 rounded-2xl hover:bg-rose-600 hover:text-white transition-all shadow-lg hover:-translate-y-1"
                           title={t('admin.purge')}
                         >
                           <Trash2 className="w-6 h-6" />
@@ -1023,13 +1023,13 @@ export default function AdminPanel() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-neutral-50/50 border-b-2 border-neutral-100">
+                <tr className="bg-zinc-900/50/50 border-b-2 border-white/5">
                   <th className="p-10 w-20">
                     <input 
                       type="checkbox"
                       checked={selectedUsers.length === filteredUsers.length && filteredUsers.length > 0}
                       onChange={selectAllUsers}
-                      className="w-6 h-6 rounded-lg border-2 border-neutral-200 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer"
+                      className="w-6 h-6 rounded-lg border-2 border-white/10 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer"
                     />
                   </th>
                   <th className="p-10 text-[11px] font-black uppercase tracking-[0.4em] text-neutral-400">{t('admin.user_identity')}</th>
@@ -1041,14 +1041,14 @@ export default function AdminPanel() {
               </thead>
               <tbody className="divide-y-2 divide-neutral-50">
                 {filteredUsers.map((u, index) => (
-                  <tr key={u.uid} className={`hover:bg-neutral-50/50 transition-all group ${selectedUsers.includes(u.uid) ? 'bg-indigo-50/30' : ''}`}>
+                  <tr key={u.uid} className={`hover:bg-zinc-900/50/50 transition-all group ${selectedUsers.includes(u.uid) ? 'bg-indigo-50/30' : ''}`}>
                     <td className="p-10">
                       <input 
                         type="checkbox"
                         checked={selectedUsers.includes(u.uid)}
                         onClick={(e) => toggleUserSelection(u.uid, index, e)}
                         onChange={() => {}}
-                        className="w-6 h-6 rounded-lg border-2 border-neutral-200 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer"
+                        className="w-6 h-6 rounded-lg border-2 border-white/10 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer"
                       />
                     </td>
                     <td className="p-10">
@@ -1058,15 +1058,15 @@ export default function AdminPanel() {
                           <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-4 border-white shadow-lg ${u.trustScore > 70 ? 'bg-emerald-500' : 'bg-amber-500'}`} />
                         </div>
                         <div>
-                          <p className="font-display font-black text-lg text-neutral-900 tracking-tight">{u.displayName}</p>
+                          <p className="font-display font-black text-lg text-white tracking-tight">{u.displayName}</p>
                           <p className="text-xs text-neutral-400 font-black tracking-widest uppercase opacity-70">{u.email}</p>
                         </div>
                       </div>
                     </td>
                     <td className="p-10 text-center">
                       <div className="inline-flex flex-col items-center gap-3">
-                        <span className="font-display font-black text-4xl text-neutral-900 tracking-tighter">{u.trustScore}</span>
-                        <div className="w-40 h-2 bg-neutral-100 rounded-full overflow-hidden shadow-inner">
+                        <span className="font-display font-black text-4xl text-white tracking-tighter">{u.trustScore}</span>
+                        <div className="w-40 h-2 bg-zinc-800/50 rounded-full overflow-hidden shadow-inner">
                           <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${u.trustScore}%` }}
@@ -1078,7 +1078,7 @@ export default function AdminPanel() {
                     </td>
                     <td className="p-10">
                       <div className="flex flex-col">
-                        <span className="text-sm font-black text-neutral-900 tracking-tight">
+                        <span className="text-sm font-black text-white tracking-tight">
                           {u.lastActive ? formatDistanceToNow(new Date(u.lastActive), { addSuffix: true }) : '---'}
                         </span>
                         <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400 opacity-70">
@@ -1088,7 +1088,7 @@ export default function AdminPanel() {
                     </td>
                     <td className="p-10">
                       <span className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border-2 shadow-sm ${
-                        u.role === 'admin' ? 'bg-violet-50 text-violet-700 border-violet-100' : 'bg-neutral-50 text-neutral-600 border-neutral-100'
+                        u.role === 'admin' ? 'bg-violet-50 text-violet-700 border-violet-100' : 'bg-zinc-900/50 text-zinc-300 border-white/5'
                       }`}>
                         {u.role === 'admin' ? t('admin.admin') : t('admin.user')}
                       </span>
@@ -1123,13 +1123,13 @@ export default function AdminPanel() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-white rounded-[48px] w-full max-w-xl p-12 shadow-2xl border-2 border-neutral-100"
+              className="glass-dark rounded-[48px] w-full max-w-xl p-12 shadow-2xl border-2 border-white/5"
             >
               <div className="w-20 h-20 bg-indigo-50 rounded-3xl flex items-center justify-center mb-8">
                 <Globe className="w-10 h-10 text-indigo-600" />
               </div>
-              <h3 className="text-4xl font-display font-black text-neutral-900 mb-4 tracking-tighter">{t('admin.broadcast')}</h3>
-              <p className="text-neutral-500 text-lg font-medium mb-10 opacity-70">{t('admin.broadcast_desc')}</p>
+              <h3 className="text-4xl font-display font-black text-white mb-4 tracking-tighter">{t('admin.broadcast')}</h3>
+              <p className="text-zinc-400 text-lg font-medium mb-10 opacity-70">{t('admin.broadcast_desc')}</p>
               
               <div className="space-y-6 mb-10">
                 <input
@@ -1137,20 +1137,20 @@ export default function AdminPanel() {
                   value={broadcastMessage.title}
                   onChange={(e) => setBroadcastMessage({ ...broadcastMessage, title: e.target.value })}
                   placeholder={t('admin.broadcast_title')}
-                  className="w-full bg-neutral-50 border-2 border-neutral-100 rounded-2xl px-8 py-4 text-lg font-bold focus:border-indigo-500 outline-none transition-all"
+                  className="w-full bg-zinc-900/50 border-2 border-white/5 rounded-2xl px-8 py-4 text-lg font-bold focus:border-indigo-500 outline-none transition-all"
                 />
                 <textarea
                   value={broadcastMessage.message}
                   onChange={(e) => setBroadcastMessage({ ...broadcastMessage, message: e.target.value })}
                   placeholder={t('admin.broadcast_msg')}
-                  className="w-full bg-neutral-50 border-2 border-neutral-100 rounded-[32px] p-8 text-lg font-medium focus:border-indigo-500 outline-none transition-all h-48 shadow-inner"
+                  className="w-full bg-zinc-900/50 border-2 border-white/5 rounded-[32px] p-8 text-lg font-medium focus:border-indigo-500 outline-none transition-all h-48 shadow-inner"
                 />
               </div>
 
               <div className="flex gap-6">
                 <button 
                   onClick={() => setBroadcastModal(false)}
-                  className="flex-1 py-6 rounded-[28px] text-sm font-black uppercase tracking-[0.3em] text-neutral-400 hover:bg-neutral-50 transition-all"
+                  className="flex-1 py-6 rounded-[28px] text-sm font-black uppercase tracking-[0.3em] text-neutral-400 hover:bg-zinc-900/50 transition-all"
                 >
                   {t('admin.cancel')}
                 </button>
@@ -1173,25 +1173,25 @@ export default function AdminPanel() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-white rounded-[48px] w-full max-w-xl p-12 shadow-2xl border-2 border-neutral-100"
+              className="glass-dark rounded-[48px] w-full max-w-xl p-12 shadow-2xl border-2 border-white/5"
             >
               <div className="w-20 h-20 bg-rose-50 rounded-3xl flex items-center justify-center mb-8">
                 <Ban className="w-10 h-10 text-rose-600" />
               </div>
-              <h3 className="text-4xl font-display font-black text-neutral-900 mb-4 tracking-tighter">{t('admin.reject_report')}</h3>
-              <p className="text-neutral-500 text-lg font-medium mb-10 opacity-70">{t('admin.reject_desc')}</p>
+              <h3 className="text-4xl font-display font-black text-white mb-4 tracking-tighter">{t('admin.reject_report')}</h3>
+              <p className="text-zinc-400 text-lg font-medium mb-10 opacity-70">{t('admin.reject_desc')}</p>
               
               <textarea
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
                 placeholder={t('admin.reject_placeholder')}
-                className="w-full bg-neutral-50 border-2 border-neutral-100 rounded-[32px] p-8 text-lg font-medium focus:border-rose-500 focus:ring-8 focus:ring-rose-500/10 outline-none transition-all h-48 mb-10 shadow-inner"
+                className="w-full bg-zinc-900/50 border-2 border-white/5 rounded-[32px] p-8 text-lg font-medium focus:border-rose-500 focus:ring-8 focus:ring-rose-500/10 outline-none transition-all h-48 mb-10 shadow-inner"
               />
 
               <div className="flex gap-6">
                 <button 
                   onClick={() => setRejectionModal({ id: '', isOpen: false })}
-                  className="flex-1 py-6 rounded-[28px] text-sm font-black uppercase tracking-[0.3em] text-neutral-400 hover:bg-neutral-50 transition-all"
+                  className="flex-1 py-6 rounded-[28px] text-sm font-black uppercase tracking-[0.3em] text-neutral-400 hover:bg-zinc-900/50 transition-all"
                 >
                   {t('admin.cancel')}
                 </button>
@@ -1219,13 +1219,13 @@ export default function AdminPanel() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-white rounded-[48px] w-full max-w-xl p-12 shadow-2xl border-2 border-neutral-100"
+              className="glass-dark rounded-[48px] w-full max-w-xl p-12 shadow-2xl border-2 border-white/5"
             >
               <div className="w-20 h-20 bg-rose-50 rounded-3xl flex items-center justify-center mb-8">
                 <AlertTriangle className="w-10 h-10 text-rose-600" />
               </div>
-              <h3 className="text-4xl font-display font-black text-neutral-900 mb-4 tracking-tighter">{t('admin.purge_record')}</h3>
-              <p className="text-neutral-500 text-lg font-medium mb-12 opacity-70">
+              <h3 className="text-4xl font-display font-black text-white mb-4 tracking-tighter">{t('admin.purge_record')}</h3>
+              <p className="text-zinc-400 text-lg font-medium mb-12 opacity-70">
                 {Array.isArray(deleteModal.id) 
                   ? t('admin.delete_multiple_warning')
                   : t('admin.delete_warning')}
@@ -1234,7 +1234,7 @@ export default function AdminPanel() {
               <div className="flex gap-6">
                 <button 
                   onClick={() => setDeleteModal({ id: '', isOpen: false })}
-                  className="flex-1 py-6 rounded-[28px] text-sm font-black uppercase tracking-[0.3em] text-neutral-400 hover:bg-neutral-50 transition-all"
+                  className="flex-1 py-6 rounded-[28px] text-sm font-black uppercase tracking-[0.3em] text-neutral-400 hover:bg-zinc-900/50 transition-all"
                 >
                   {t('admin.cancel')}
                 </button>
@@ -1262,7 +1262,7 @@ export default function AdminPanel() {
               initial={{ scale: 0.9, opacity: 0, y: 40 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 40 }}
-              className="relative w-full max-w-2xl bg-white rounded-[60px] p-16 shadow-2xl overflow-hidden"
+              className="relative w-full max-w-2xl glass-dark rounded-[60px] p-16 shadow-2xl overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/5 rounded-bl-[120px]" />
               
@@ -1271,19 +1271,19 @@ export default function AdminPanel() {
                   <Trash2 className="w-10 h-10" />
                 </div>
                 <div>
-                  <h2 className="font-display font-black text-4xl text-neutral-900 tracking-tight">{t('admin.confirm_delete')}</h2>
+                  <h2 className="font-display font-black text-4xl text-white tracking-tight">{t('admin.confirm_delete')}</h2>
                   <p className="text-sm text-neutral-400 font-black uppercase tracking-widest mt-2">{t('admin.purge_record')}</p>
                 </div>
               </div>
 
-              <p className="text-xl text-neutral-600 font-medium leading-relaxed mb-16">
+              <p className="text-xl text-zinc-300 font-medium leading-relaxed mb-16">
                 {t('admin.delete_users_warning')}
               </p>
               
               <div className="flex gap-6">
                 <button 
                   onClick={() => setUserDeleteModal({ uids: [], isOpen: false })}
-                  className="flex-1 py-6 rounded-[28px] text-sm font-black uppercase tracking-[0.3em] text-neutral-400 hover:bg-neutral-50 transition-all"
+                  className="flex-1 py-6 rounded-[28px] text-sm font-black uppercase tracking-[0.3em] text-neutral-400 hover:bg-zinc-900/50 transition-all"
                 >
                   {t('admin.cancel')}
                 </button>

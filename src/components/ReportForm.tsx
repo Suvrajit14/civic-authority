@@ -505,7 +505,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-white/80 backdrop-blur-xl z-[100] flex flex-col items-center justify-center p-12 text-center"
+            className="fixed inset-0 glass-dark/80 backdrop-blur-xl z-[100] flex flex-col items-center justify-center p-12 text-center"
           >
             <LoadingSpinner size="xl" label={isSubmitting ? t('report.submitting') : t('report.neural_analysis')} />
             <motion.div
@@ -514,10 +514,10 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
               transition={{ delay: 0.5 }}
               className="mt-12 max-w-md"
             >
-              <h3 className="text-2xl font-display font-black text-neutral-900 mb-4 tracking-tight">
+              <h3 className="text-2xl font-display font-black text-white mb-4 tracking-tight">
                 {isSubmitting ? t('report.securing_data') : t('report.ai_verification_core')}
               </h3>
-              <p className="text-neutral-500 font-medium leading-relaxed">
+              <p className="text-zinc-400 font-medium leading-relaxed">
                 {isSubmitting 
                   ? t('report.securing_data_desc')
                   : t('report.ai_verification_desc')}
@@ -534,23 +534,23 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
             <div key={s} className="flex items-center gap-6">
               <div className={`w-14 h-14 rounded-3xl flex items-center justify-center font-display font-black transition-all duration-700 shadow-sm ${
                 step === s ? 'bg-neutral-900 text-white shadow-2xl shadow-black/30 scale-125 rotate-6' : 
-                step > s ? 'bg-gradient-success text-white shadow-lg shadow-emerald-500/20' : 'bg-white border border-neutral-100 text-neutral-300'
+                step > s ? 'bg-gradient-success text-white shadow-lg shadow-emerald-500/20' : 'glass-dark border border-white/5 text-neutral-300'
               }`}>
                 {step > s ? <CheckCircle2 className="w-7 h-7" /> : s}
               </div>
-              {s < 3 && <div className={`w-16 h-1 rounded-full transition-all duration-700 ${step > s ? 'bg-gradient-success' : 'bg-neutral-100'}`} />}
+              {s < 3 && <div className={`w-16 h-1 rounded-full transition-all duration-700 ${step > s ? 'bg-gradient-success' : 'bg-zinc-800/50'}`} />}
             </div>
           ))}
         </div>
         <div className="text-right hidden sm:block">
           <p className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-400 mb-2">{t('report.current_protocol')}</p>
-          <p className="font-display font-black text-3xl tracking-tighter text-neutral-900">
+          <p className="font-display font-black text-3xl tracking-tighter text-white">
             {step === 1 ? t('report.step1') : step === 2 ? t('report.step2') : t('report.step3')}
           </p>
         </div>
       </div>
 
-      <div className="bg-white/80 backdrop-blur-2xl rounded-[56px] shadow-3xl shadow-black/5 border border-neutral-100 overflow-hidden relative">
+      <div className="glass-dark/80 backdrop-blur-2xl rounded-[56px] shadow-3xl shadow-black/5 border border-white/5 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-vibrant opacity-[0.03] rounded-full -mr-32 -mt-32 blur-3xl" />
         <form onSubmit={handleSubmit} className="p-12 lg:p-24 relative z-10">
           {step === 1 && (
@@ -560,10 +560,10 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                   <div className="w-3 h-3 rounded-full bg-vibrant-indigo animate-pulse shadow-[0_0_12px_rgba(79,70,229,0.5)]" />
                   <span className="text-[11px] font-black uppercase tracking-[0.4em] text-neutral-400">{t('report.step1_title')}</span>
                 </div>
-                <h2 className="text-6xl lg:text-7xl font-display font-black text-neutral-900 mb-8 tracking-tighter leading-[0.9]">
+                <h2 className="text-6xl lg:text-7xl font-display font-black text-white mb-8 tracking-tighter leading-[0.9]">
                   {t('report.visual_evidence').split(' ')[0]} <span className="text-gradient">{t('report.visual_evidence').split(' ').slice(1).join(' ')}</span>
                 </h2>
-                <p className="text-neutral-500 text-2xl font-medium leading-relaxed opacity-80 mb-12">
+                <p className="text-zinc-400 text-2xl font-medium leading-relaxed opacity-80 mb-12">
                   {t('report.visual_evidence_desc')}
                 </p>
 
@@ -585,7 +585,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                 onDrop={handleDrop}
                 className={`relative aspect-video border-4 border-dashed rounded-[48px] flex flex-col items-center justify-center cursor-pointer transition-all duration-700 overflow-hidden group shadow-2xl ${
                   isDragging ? 'border-vibrant-indigo bg-indigo-50/50 scale-[1.02]' :
-                  image ? 'border-vibrant-emerald bg-emerald-50/30' : 'border-neutral-100 bg-neutral-50/50 hover:border-vibrant-indigo hover:bg-white'
+                  image ? 'border-vibrant-emerald bg-emerald-50/30' : 'border-white/5 bg-zinc-900/50/50 hover:border-vibrant-indigo hover:glass-dark'
                 }`}
               >
                 {isCameraOpen ? (
@@ -595,14 +595,14 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                       <button 
                         type="button"
                         onClick={(e) => { e.stopPropagation(); stopCamera(); }}
-                        className="flex-1 py-6 bg-white/10 backdrop-blur-md text-white rounded-2xl font-black uppercase tracking-widest text-[10px] border border-white/20 hover:bg-white/20"
+                        className="flex-1 py-6 glass-dark/10 backdrop-blur-md text-white rounded-2xl font-black uppercase tracking-widest text-[10px] border border-white/20 hover:glass-dark/20"
                       >
                         {t('report.cancel')}
                       </button>
                       <button 
                         type="button"
                         onClick={(e) => { e.stopPropagation(); capturePhoto(); }}
-                        className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-90 transition-all"
+                        className="w-20 h-20 glass-dark rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-90 transition-all"
                       >
                         <div className="w-16 h-16 border-4 border-black rounded-full" />
                       </button>
@@ -625,7 +625,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                             uploadPromiseRef.current = null;
                             aiPromiseRef.current = null;
                           }}
-                          className="p-8 bg-white text-black rounded-full shadow-3xl hover:scale-110 transition-transform active:scale-90"
+                          className="p-8 glass-dark text-black rounded-full shadow-3xl hover:scale-110 transition-transform active:scale-90"
                         >
                           <X className="w-10 h-10" />
                         </button>
@@ -642,7 +642,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                 ) : (
                   <div className="text-center p-12">
                     <div className="flex gap-4 justify-center mb-10">
-                      <div className="w-32 h-32 bg-white rounded-[40px] flex items-center justify-center shadow-3xl group-hover:scale-110 group-hover:-rotate-6 transition-all duration-700 border border-neutral-50">
+                      <div className="w-32 h-32 glass-dark rounded-[40px] flex items-center justify-center shadow-3xl group-hover:scale-110 group-hover:-rotate-6 transition-all duration-700 border border-neutral-50">
                         <Upload className="w-14 h-14 text-neutral-200 group-hover:text-vibrant-indigo transition-colors" />
                       </div>
                       <button
@@ -653,7 +653,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                         <Camera className="w-14 h-14 text-white" />
                       </button>
                     </div>
-                    <p className="text-3xl font-display font-black text-neutral-900 mb-4 tracking-tighter">{t('report.initialize_capture')}</p>
+                    <p className="text-3xl font-display font-black text-white mb-4 tracking-tighter">{t('report.initialize_capture')}</p>
                     <p className="text-base text-neutral-400 max-w-[320px] mx-auto leading-relaxed font-medium">
                       {t('report.upload_img')}
                     </p>
@@ -687,8 +687,8 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                   <div className="w-2 h-2 rounded-full bg-black animate-pulse" />
                   <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400">{t('report.step2_title_short')}</span>
                 </div>
-                <h2 className="text-5xl font-display font-bold text-neutral-900 mb-6 tracking-tight">{t('report.intelligence_location').split(' ')[0]} <span className="text-gradient">{t('report.intelligence_location').split(' ').slice(1).join(' ')}</span></h2>
-                <p className="text-neutral-500 text-xl font-light leading-relaxed mb-10">
+                <h2 className="text-5xl font-display font-bold text-white mb-6 tracking-tight">{t('report.intelligence_location').split(' ')[0]} <span className="text-gradient">{t('report.intelligence_location').split(' ').slice(1).join(' ')}</span></h2>
+                <p className="text-zinc-400 text-xl font-light leading-relaxed mb-10">
                   {t('report.intelligence_location_desc')}
                 </p>
 
@@ -729,7 +729,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                     : 'Detecting your location automatically...'}
                 </div>
 
-                <div className="h-[320px] rounded-2xl overflow-hidden border border-neutral-200 shadow-sm relative">
+                <div className="h-[320px] rounded-2xl overflow-hidden border border-white/10 shadow-sm relative">
                   <MapContainer 
                     center={location ? [location.lat, location.lng] : [20.2961, 85.8245]} 
                     zoom={15} 
@@ -747,7 +747,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                   <button
                     type="button"
                     onClick={() => getCurrentLocation(false)}
-                    className="absolute top-3 right-3 z-[500] flex items-center gap-2 px-3 py-2 bg-white border border-neutral-200 rounded-xl shadow-md text-xs font-bold text-purple-600 hover:bg-purple-50 transition-all"
+                    className="absolute top-3 right-3 z-[500] flex items-center gap-2 px-3 py-2 glass-dark border border-white/10 rounded-xl shadow-md text-xs font-bold text-purple-600 hover:bg-purple-50 transition-all"
                   >
                     <MapPin className="w-3.5 h-3.5" />
                     My Location
@@ -755,9 +755,9 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
 
                   {/* Address overlay at bottom */}
                   {address && (
-                    <div className="absolute bottom-3 left-3 right-3 z-[500] bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl border border-neutral-100 shadow-lg">
+                    <div className="absolute bottom-3 left-3 right-3 z-[500] glass-dark/95 backdrop-blur-md px-4 py-3 rounded-xl border border-white/5 shadow-lg">
                       <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-0.5">Selected Location</p>
-                      <p className="text-xs font-bold text-neutral-900 truncate">📍 {address.split(',').slice(0, 4).join(',')}</p>
+                      <p className="text-xs font-bold text-white truncate">📍 {address.split(',').slice(0, 4).join(',')}</p>
                     </div>
                   )}
                 </div>
@@ -772,7 +772,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                     <select 
                       value={category}
                       onChange={(e) => setCategory(e.target.value as IssueCategory)}
-                      className="w-full bg-neutral-50 border border-neutral-200 rounded-[24px] p-6 font-bold focus:ring-2 focus:ring-black outline-none transition-all appearance-none shadow-sm"
+                      className="w-full bg-zinc-900/50 border border-white/10 rounded-[24px] p-6 font-bold focus:ring-2 focus:ring-black outline-none transition-all appearance-none shadow-sm"
                     >
                       <option value="Traffic">{t('cat.traffic')}</option>
                       <option value="Road">{t('cat.road')}</option>
@@ -800,7 +800,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                       value={customCategory}
                       onChange={(e) => setCustomCategory(e.target.value)}
                       placeholder={t('report.specify_issue')}
-                      className="w-full bg-neutral-50 border border-neutral-200 rounded-[24px] p-6 font-bold focus:ring-2 focus:ring-black outline-none transition-all shadow-sm"
+                      className="w-full bg-zinc-900/50 border border-white/10 rounded-[24px] p-6 font-bold focus:ring-2 focus:ring-black outline-none transition-all shadow-sm"
                     />
                   </div>
                 )}
@@ -811,7 +811,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                     value={landmark}
                     onChange={(e) => setLandmark(e.target.value)}
                     placeholder={t('report.landmark_placeholder')}
-                    className="w-full bg-neutral-50 border border-neutral-200 rounded-[24px] p-6 font-bold focus:ring-2 focus:ring-black outline-none transition-all shadow-sm"
+                    className="w-full bg-zinc-900/50 border border-white/10 rounded-[24px] p-6 font-bold focus:ring-2 focus:ring-black outline-none transition-all shadow-sm"
                   />
                 </div>
               </div>
@@ -823,7 +823,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                     type="button"
                     onClick={isRecording ? stopRecording : startRecording}
                     className={`flex items-center gap-3 px-5 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all shadow-sm ${
-                      isRecording ? 'bg-red-500 text-white animate-pulse' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                      isRecording ? 'bg-red-500 text-white animate-pulse' : 'bg-zinc-800/50 text-zinc-300 hover:bg-neutral-200'
                     }`}
                   >
                     <Mic className="w-4 h-4" />
@@ -840,7 +840,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder={t('report.description_placeholder')}
                   rows={5}
-                  className="w-full bg-neutral-50 border border-neutral-200 rounded-[32px] p-8 font-medium focus:ring-2 focus:ring-black outline-none transition-all resize-none leading-relaxed shadow-sm"
+                  className="w-full bg-zinc-900/50 border border-white/10 rounded-[32px] p-8 font-medium focus:ring-2 focus:ring-black outline-none transition-all resize-none leading-relaxed shadow-sm"
                 />
               </div>
 
@@ -886,8 +886,8 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                   <div className="w-2 h-2 rounded-full bg-black animate-pulse" />
                   <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400">{t('report.step3_title_short')}</span>
                 </div>
-                <h2 className="text-5xl font-display font-bold text-neutral-900 mb-6 tracking-tight">{t('report.final_submission')}</h2>
-                <p className="text-neutral-500 text-xl font-light leading-relaxed mb-10">
+                <h2 className="text-5xl font-display font-bold text-white mb-6 tracking-tight">{t('report.final_submission')}</h2>
+                <p className="text-zinc-400 text-xl font-light leading-relaxed mb-10">
                   {t('report.final_submission_desc')}
                 </p>
 
@@ -906,26 +906,26 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                 <div className="space-y-8">
                   <div className="p-10 bg-neutral-900 text-white rounded-[40px] space-y-6 shadow-2xl">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-md">
+                      <div className="w-10 h-10 glass-dark/10 rounded-xl flex items-center justify-center backdrop-blur-md">
                         <Shield className="w-5 h-5 text-brand-accent" />
                       </div>
                       <span className="text-[10px] font-bold uppercase tracking-[0.3em]">{t('report.protocol_summary')}</span>
                     </div>
                     <div className="space-y-4">
                       <div className="flex justify-between text-sm border-b border-white/5 pb-4">
-                        <span className="text-neutral-500 font-medium">{t('report.classification')}</span>
+                        <span className="text-zinc-400 font-medium">{t('report.classification')}</span>
                         <span className="font-bold">{category === 'Other' ? customCategory : t(`cat.${category.toLowerCase()}`)}</span>
                       </div>
                       <div className="flex justify-between text-sm border-b border-white/5 pb-4">
-                        <span className="text-neutral-500 font-medium">{t('report.incident_location')}</span>
+                        <span className="text-zinc-400 font-medium">{t('report.incident_location')}</span>
                         <span className="font-bold text-brand-accent truncate max-w-[150px]">{address}</span>
                       </div>
                       <div className="flex justify-between text-sm border-b border-white/5 pb-4">
-                        <span className="text-neutral-500 font-medium">{t('report.evidence')}</span>
+                        <span className="text-zinc-400 font-medium">{t('report.evidence')}</span>
                         <span className="font-bold text-brand-accent">{t('report.captured')}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-neutral-500 font-medium">{t('report.ai_status')}</span>
+                        <span className="text-zinc-400 font-medium">{t('report.ai_status')}</span>
                         <span className="font-bold">{isValidating ? t('report.processing') : t('report.analyzed')}</span>
                       </div>
                     </div>
@@ -935,7 +935,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                 <div className="space-y-4">
                   <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400 ml-1">{t('report.ai_verification_engine')}</label>
                   {isValidating ? (
-                    <div className="h-full min-h-[300px] rounded-[40px] border border-neutral-100 bg-neutral-50 flex flex-col items-center justify-center gap-6 animate-pulse shadow-inner">
+                    <div className="h-full min-h-[300px] rounded-[40px] border border-white/5 bg-zinc-900/50 flex flex-col items-center justify-center gap-6 animate-pulse shadow-inner">
                       <div className="relative">
                         <Loader2 className="w-12 h-12 animate-spin text-black" />
                         <Bot className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-black" />
@@ -969,8 +969,8 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                       </div>
                     </div>
                   ) : (
-                    <div className="h-full min-h-[300px] rounded-[40px] border border-neutral-100 bg-neutral-50 flex flex-col items-center justify-center gap-6 p-12 text-center shadow-inner">
-                      <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-md">
+                    <div className="h-full min-h-[300px] rounded-[40px] border border-white/5 bg-zinc-900/50 flex flex-col items-center justify-center gap-6 p-12 text-center shadow-inner">
+                      <div className="w-16 h-16 glass-dark rounded-2xl flex items-center justify-center shadow-md">
                         <Info className="w-8 h-8 text-neutral-200" />
                       </div>
                       <p className="text-sm text-neutral-400 font-medium leading-relaxed">{t('report.ai_analysis_pending')}</p>
@@ -979,7 +979,7 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                 </div>
               </div>
 
-              <div className="flex justify-between pt-12 border-t border-neutral-100">
+              <div className="flex justify-between pt-12 border-t border-white/5">
                 <button
                   type="button"
                   onClick={() => setStep(2)}

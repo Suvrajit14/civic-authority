@@ -92,7 +92,7 @@ export default function Chatbot() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className={`bg-white rounded-[40px] shadow-3xl border border-neutral-200 flex flex-col overflow-hidden transition-all ${
+            className={`glass-dark rounded-[40px] shadow-3xl border border-white/10 flex flex-col overflow-hidden transition-all ${
               isMinimized ? 'h-20 w-80' : 'h-[650px] w-[450px]'
             }`}
           >
@@ -100,7 +100,7 @@ export default function Chatbot() {
             <div className="p-6 bg-neutral-900 text-white flex items-center justify-between shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-vibrant opacity-20 animate-gradient-x" />
               <div className="flex items-center gap-4 relative z-10">
-                <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-2xl border border-white/20 shadow-xl">
+                <div className="w-12 h-12 glass-dark/10 rounded-2xl flex items-center justify-center backdrop-blur-2xl border border-white/20 shadow-xl">
                   <Bot className="w-7 h-7 text-brand-accent" />
                 </div>
                 <div>
@@ -114,10 +114,10 @@ export default function Chatbot() {
                 </div>
               </div>
               <div className="flex items-center gap-2 relative z-10">
-                <button onClick={() => setIsMinimized(!isMinimized)} className="p-2.5 hover:bg-white/10 rounded-xl transition-all active:scale-90">
+                <button onClick={() => setIsMinimized(!isMinimized)} className="p-2.5 hover:glass-dark/10 rounded-xl transition-all active:scale-90">
                   {isMinimized ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
                 </button>
-                <button onClick={() => setIsOpen(false)} className="p-2.5 hover:bg-white/10 rounded-xl transition-all active:scale-90">
+                <button onClick={() => setIsOpen(false)} className="p-2.5 hover:glass-dark/10 rounded-xl transition-all active:scale-90">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -126,18 +126,18 @@ export default function Chatbot() {
             {!isMinimized && (
               <>
                 {/* Messages */}
-                <div ref={scrollRef} className="flex-1 overflow-y-auto p-8 space-y-10 bg-neutral-50/30 no-scrollbar">
+                <div ref={scrollRef} className="flex-1 overflow-y-auto p-8 space-y-10 bg-zinc-900/50/30 no-scrollbar">
                   {messages.map((msg, i) => (
                     <div key={i} className={`flex gap-5 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                       <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-xl transition-transform hover:scale-110 ${
-                        msg.role === 'user' ? 'bg-neutral-900 text-white' : 'bg-white border border-neutral-100 text-neutral-900'
+                        msg.role === 'user' ? 'bg-neutral-900 text-white' : 'glass-dark border border-white/5 text-white'
                       }`}>
                         {msg.role === 'user' ? <User className="w-6 h-6" /> : <Bot className="w-6 h-6 text-vibrant-indigo" />}
                       </div>
                       <div className={`max-w-[80%] p-6 rounded-[32px] text-sm leading-relaxed shadow-xl border transition-all ${
                         msg.role === 'user' 
                           ? 'bg-neutral-900 text-white border-neutral-800 rounded-tr-none' 
-                          : 'bg-white text-neutral-800 border-neutral-50 rounded-tl-none'
+                          : 'glass-dark text-zinc-100 border-neutral-50 rounded-tl-none'
                       }`}>
                         <div className="markdown-body prose prose-sm prose-neutral max-w-none">
                           <ReactMarkdown>{msg.text}</ReactMarkdown>
@@ -147,10 +147,10 @@ export default function Chatbot() {
                   ))}
                   {isLoading && (
                     <div className="flex gap-5">
-                      <div className="w-12 h-12 bg-white border border-neutral-100 text-neutral-900 rounded-2xl flex items-center justify-center shadow-xl">
+                      <div className="w-12 h-12 glass-dark border border-white/5 text-white rounded-2xl flex items-center justify-center shadow-xl">
                         <Bot className="w-6 h-6 text-vibrant-indigo animate-bounce" />
                       </div>
-                      <div className="bg-white p-6 rounded-[32px] rounded-tl-none border border-neutral-50 shadow-xl flex items-center gap-3">
+                      <div className="glass-dark p-6 rounded-[32px] rounded-tl-none border border-neutral-50 shadow-xl flex items-center gap-3">
                         <div className="flex gap-1.5">
                           <div className="w-2 h-2 bg-vibrant-indigo/30 rounded-full animate-bounce [animation-delay:-0.3s]" />
                           <div className="w-2 h-2 bg-vibrant-indigo/30 rounded-full animate-bounce [animation-delay:-0.15s]" />
@@ -162,8 +162,8 @@ export default function Chatbot() {
                 </div>
 
                 {/* Input */}
-                <div className="p-8 border-t border-neutral-100 bg-white space-y-4">
-                  <div className="flex items-center gap-4 bg-neutral-50 border-2 border-neutral-100 rounded-[32px] p-3 focus-within:border-vibrant-indigo focus-within:ring-8 focus-within:ring-vibrant-indigo/5 transition-all shadow-inner group">
+                <div className="p-8 border-t border-white/5 glass-dark space-y-4">
+                  <div className="flex items-center gap-4 bg-zinc-900/50 border-2 border-white/5 rounded-[32px] p-3 focus-within:border-vibrant-indigo focus-within:ring-8 focus-within:ring-vibrant-indigo/5 transition-all shadow-inner group">
                     <button 
                       onClick={handleLocate}
                       disabled={isLocating}
@@ -178,7 +178,7 @@ export default function Chatbot() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                      className="flex-1 bg-transparent border-none outline-none px-4 text-base font-bold text-neutral-900 placeholder:text-neutral-300"
+                      className="flex-1 bg-transparent border-none outline-none px-4 text-base font-bold text-white placeholder:text-neutral-300"
                     />
                     <button onClick={handleSend} className="w-12 h-12 flex items-center justify-center bg-neutral-900 text-white rounded-2xl hover:bg-black transition-all shadow-2xl active:scale-90 group-focus-within:bg-vibrant-indigo">
                       <Send className="w-5 h-5" />

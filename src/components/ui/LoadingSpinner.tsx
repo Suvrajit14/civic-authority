@@ -19,7 +19,7 @@ export default function LoadingSpinner({ size = 'md', label }: LoadingSpinnerPro
           <Shield className={`${iconSizes[size]}`} style={{ color: 'rgba(99,102,241,0.4)' }} />
         </div>
       </div>
-      {label && <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(26,26,46,0.4)' }}>{label}</p>}
+      {label && <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(161,161,170,0.9)' }}>{label}</p>}
     </div>
   );
 }

@@ -84,21 +84,21 @@ export default function Auth() {
               <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
-              <span className="font-display font-black text-xl" style={{ color: '#1a1a2e' }}>Civic Pillar</span>
+              <span className="font-display font-black text-xl" style={{ color: '#f4f4f5' }}>Civic Pillar</span>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <Sparkles className="w-3 h-3" style={{ color: '#6366F1' }} />
-                <span className="text-[10px] font-semibold" style={{ color: 'rgba(26,26,46,0.4)' }}>AI-Powered Platform</span>
+                <span className="text-[10px] font-semibold" style={{ color: 'rgba(161,161,170,0.9)' }}>AI-Powered Platform</span>
               </div>
             </div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            <h1 className="text-5xl font-display font-black leading-tight mb-5" style={{ color: '#1a1a2e' }}>
+            <h1 className="text-5xl font-display font-black leading-tight mb-5" style={{ color: '#f4f4f5' }}>
               Making Cities<br />
               <span className="text-gradient">Smarter</span><br />
               Together
             </h1>
-            <p className="text-lg font-medium leading-relaxed max-w-sm" style={{ color: 'rgba(26,26,46,0.5)' }}>
+            <p className="text-lg font-medium leading-relaxed max-w-sm" style={{ color: 'rgba(161,161,170,1.0)' }}>
               Report, track and resolve civic issues in your community with AI-powered verification.
             </p>
           </motion.div>
@@ -114,8 +114,8 @@ export default function Auth() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: f.bg }}>
                 <f.icon className="w-4 h-4" style={{ color: f.color }} />
               </div>
-              <p className="font-bold text-sm mb-0.5" style={{ color: '#1a1a2e' }}>{f.title}</p>
-              <p className="text-xs leading-relaxed" style={{ color: 'rgba(26,26,46,0.45)' }}>{f.desc}</p>
+              <p className="font-bold text-sm mb-0.5" style={{ color: '#f4f4f5' }}>{f.title}</p>
+              <p className="text-xs leading-relaxed" style={{ color: 'rgba(161,161,170,0.9)' }}>{f.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -126,7 +126,7 @@ export default function Auth() {
           {[['10K+', 'Issues Resolved', '#6366F1'], ['98%', 'AI Accuracy', '#10B981'], ['24/7', 'Monitoring', '#8B5CF6']].map(([val, label, color]) => (
             <div key={label}>
               <p className="font-display font-black text-xl" style={{ color }}>{val}</p>
-              <p className="text-xs font-medium" style={{ color: 'rgba(26,26,46,0.4)' }}>{label}</p>
+              <p className="text-xs font-medium" style={{ color: 'rgba(161,161,170,0.9)' }}>{label}</p>
             </div>
           ))}
         </motion.div>
@@ -143,7 +143,7 @@ export default function Auth() {
               style={{ background: 'linear-gradient(135deg, #8B5CF6, #6366F1)', boxShadow: '0 4px 15px rgba(99,102,241,0.3)' }}>
               <Shield className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display font-black text-xl" style={{ color: '#1a1a2e' }}>Civic Pillar</span>
+            <span className="font-display font-black text-xl" style={{ color: '#f4f4f5' }}>Civic Pillar</span>
           </div>
 
           {/* Card */}
@@ -153,10 +153,10 @@ export default function Auth() {
               {(mode === 'login' || mode === 'register') && (
                 <motion.div key="auth" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
                   <div className="mb-6">
-                    <h2 className="text-2xl font-display font-black mb-1" style={{ color: '#1a1a2e' }}>
+                    <h2 className="text-2xl font-display font-black mb-1" style={{ color: '#f4f4f5' }}>
                       {mode === 'login' ? 'Welcome back 👋' : 'Join us today ✨'}
                     </h2>
-                    <p className="text-sm" style={{ color: 'rgba(26,26,46,0.45)' }}>
+                    <p className="text-sm" style={{ color: 'rgba(161,161,170,0.9)' }}>
                       {mode === 'login' ? 'Sign in to your account' : 'Create your free account'}
                     </p>
                   </div>
@@ -168,7 +168,7 @@ export default function Auth() {
                         className="flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 capitalize"
                         style={mode === tab
                           ? { background: 'white', color: '#6366F1', boxShadow: '0 2px 8px rgba(99,102,241,0.15)' }
-                          : { color: 'rgba(26,26,46,0.4)' }}>
+                          : { color: 'rgba(161,161,170,0.9)' }}>
                         {tab === 'login' ? 'Login' : 'Register'}
                       </button>
                     ))}
@@ -179,20 +179,20 @@ export default function Auth() {
                       {mode === 'register' && (
                         <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
                           <div className="relative">
-                            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(26,26,46,0.3)' }} />
+                            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
                             <input type="text" placeholder="Full Name" value={name} onChange={e => setName(e.target.value)} className="input-field pl-11" />
                           </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
                     <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(26,26,46,0.3)' }} />
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
                       <input type="email" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)} required className="input-field pl-11" />
                     </div>
                     <div className="relative">
-                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(26,26,46,0.3)' }} />
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
                       <input type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required className="input-field pl-11 pr-12" />
-                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors" style={{ color: 'rgba(26,26,46,0.3)' }}>
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors" style={{ color: 'rgba(161,161,170,0.7)' }}>
                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
@@ -207,7 +207,7 @@ export default function Auth() {
                     </motion.button>
                   </form>
 
-                  <p className="text-center text-sm mt-5" style={{ color: 'rgba(26,26,46,0.45)' }}>
+                  <p className="text-center text-sm mt-5" style={{ color: 'rgba(161,161,170,0.9)' }}>
                     {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
                     <button onClick={() => setMode(mode === 'login' ? 'register' : 'login')} className="font-bold transition-colors" style={{ color: '#6366F1' }}>
                       {mode === 'login' ? 'Sign up' : 'Sign in'}
@@ -216,7 +216,7 @@ export default function Auth() {
 
                   <div className="flex items-center justify-center gap-4 mt-5 pt-5" style={{ borderTop: '1px solid rgba(99,102,241,0.08)' }}>
                     {['AI Verified', 'Secure', 'Free'].map(badge => (
-                      <div key={badge} className="flex items-center gap-1.5" style={{ color: 'rgba(26,26,46,0.4)' }}>
+                      <div key={badge} className="flex items-center gap-1.5" style={{ color: 'rgba(161,161,170,0.9)' }}>
                         <CheckCircle2 className="w-3.5 h-3.5" style={{ color: '#10B981' }} />
                         <span className="text-xs font-medium">{badge}</span>
                       </div>
@@ -228,17 +228,17 @@ export default function Auth() {
               {/* FORGOT */}
               {mode === 'forgot' && (
                 <motion.div key="forgot" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
-                  <button onClick={() => setMode('login')} className="flex items-center gap-2 text-sm font-medium mb-6 transition-colors" style={{ color: 'rgba(26,26,46,0.4)' }}>
+                  <button onClick={() => setMode('login')} className="flex items-center gap-2 text-sm font-medium mb-6 transition-colors" style={{ color: 'rgba(161,161,170,0.9)' }}>
                     <ArrowLeft className="w-4 h-4" /> Back
                   </button>
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(99,102,241,0.1)' }}>
                     <KeyRound className="w-6 h-6" style={{ color: '#6366F1' }} />
                   </div>
-                  <h2 className="text-2xl font-display font-black mb-1" style={{ color: '#1a1a2e' }}>Forgot Password?</h2>
-                  <p className="text-sm mb-6" style={{ color: 'rgba(26,26,46,0.45)' }}>Enter your email to get a reset code.</p>
+                  <h2 className="text-2xl font-display font-black mb-1" style={{ color: '#f4f4f5' }}>Forgot Password?</h2>
+                  <p className="text-sm mb-6" style={{ color: 'rgba(161,161,170,0.9)' }}>Enter your email to get a reset code.</p>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(26,26,46,0.3)' }} />
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
                       <input type="email" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)} required className="input-field pl-11" />
                     </div>
                     <motion.button type="submit" disabled={loading} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}
@@ -253,21 +253,21 @@ export default function Auth() {
               {/* RESET */}
               {mode === 'reset' && (
                 <motion.div key="reset" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
-                  <button onClick={() => setMode('forgot')} className="flex items-center gap-2 text-sm font-medium mb-6" style={{ color: 'rgba(26,26,46,0.4)' }}>
+                  <button onClick={() => setMode('forgot')} className="flex items-center gap-2 text-sm font-medium mb-6" style={{ color: 'rgba(161,161,170,0.9)' }}>
                     <ArrowLeft className="w-4 h-4" /> Back
                   </button>
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(16,185,129,0.1)' }}>
                     <KeyRound className="w-6 h-6" style={{ color: '#10B981' }} />
                   </div>
-                  <h2 className="text-2xl font-display font-black mb-1" style={{ color: '#1a1a2e' }}>Reset Password</h2>
-                  <p className="text-sm mb-6" style={{ color: 'rgba(26,26,46,0.45)' }}>Enter your reset code and new password.</p>
+                  <h2 className="text-2xl font-display font-black mb-1" style={{ color: '#f4f4f5' }}>Reset Password</h2>
+                  <p className="text-sm mb-6" style={{ color: 'rgba(161,161,170,0.9)' }}>Enter your reset code and new password.</p>
                   <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="relative"><Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(26,26,46,0.3)' }} /><input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required className="input-field pl-11" /></div>
-                    <div className="relative"><KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(26,26,46,0.3)' }} /><input type="text" placeholder="Reset Code" value={resetToken} onChange={e => setResetToken(e.target.value.toUpperCase())} required className="input-field pl-11 tracking-widest" /></div>
+                    <div className="relative"><Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} /><input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required className="input-field pl-11" /></div>
+                    <div className="relative"><KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} /><input type="text" placeholder="Reset Code" value={resetToken} onChange={e => setResetToken(e.target.value.toUpperCase())} required className="input-field pl-11 tracking-widest" /></div>
                     <div className="relative">
-                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(26,26,46,0.3)' }} />
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
                       <input type={showPassword ? 'text' : 'password'} placeholder="New Password" value={newPassword} onChange={e => setNewPassword(e.target.value)} required className="input-field pl-11 pr-12" />
-                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(26,26,46,0.3)' }}>{showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}</button>
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(161,161,170,0.7)' }}>{showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}</button>
                     </div>
                     <motion.button type="submit" disabled={loading} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}
                       className="w-full py-3.5 rounded-xl font-bold text-sm text-white disabled:opacity-50 flex items-center justify-center gap-2"

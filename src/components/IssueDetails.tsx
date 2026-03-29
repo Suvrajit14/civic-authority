@@ -214,7 +214,7 @@ export default function IssueDetails() {
         onClick={() => navigate(-1)}
         className="group flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.3em] text-neutral-400 hover:text-indigo-500 transition-all"
       >
-        <div className="p-3 bg-white rounded-2xl shadow-xl shadow-indigo-500/5 border-2 border-neutral-50 group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-all">
+        <div className="p-3 glass-dark rounded-2xl shadow-xl shadow-indigo-500/5 border-2 border-neutral-50 group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-all">
           <ArrowLeft className="w-4 h-4" />
         </div>
         {t('issue.back_to_dashboard')}
@@ -227,7 +227,7 @@ export default function IssueDetails() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-[48px] overflow-hidden shadow-2xl shadow-indigo-500/5 border-2 border-neutral-100"
+            className="glass-dark rounded-[48px] overflow-hidden shadow-2xl shadow-indigo-500/5 border-2 border-white/5"
           >
             <div className="relative aspect-video group">
               <img 
@@ -239,7 +239,7 @@ export default function IssueDetails() {
               <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between">
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <span className="px-4 py-1.5 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest text-white border border-white/30">
+                    <span className="px-4 py-1.5 glass-dark/20 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest text-white border border-white/30">
                       {issue.category}
                     </span>
                     <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-white border border-white/30 ${
@@ -258,13 +258,13 @@ export default function IssueDetails() {
                   <button 
                     onClick={handleUpvote}
                     className={`flex items-center gap-3 px-6 py-3 rounded-2xl backdrop-blur-md border transition-all ${
-                      isUpvoted ? 'bg-indigo-500 text-white border-indigo-400' : 'bg-white/20 text-white border-white/30 hover:bg-white/30'
+                      isUpvoted ? 'bg-indigo-500 text-white border-indigo-400' : 'glass-dark/20 text-white border-white/30 hover:glass-dark/30'
                     }`}
                   >
                     <ThumbsUp className={`w-5 h-5 ${isUpvoted ? 'fill-current' : ''}`} />
                     <span className="text-sm font-black">{issue.upvotes?.length || 0}</span>
                   </button>
-                  <button className="p-3 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl text-white hover:bg-white/30 transition-all">
+                  <button className="p-3 glass-dark/20 backdrop-blur-md border border-white/30 rounded-2xl text-white hover:glass-dark/30 transition-all">
                     <Share2 className="w-5 h-5" />
                   </button>
                 </div>
@@ -274,41 +274,41 @@ export default function IssueDetails() {
             <div className="p-8 space-y-6">
               <div className="flex items-center justify-between py-6 border-b-2 border-neutral-50">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-neutral-50 rounded-2xl flex items-center justify-center">
+                  <div className="w-14 h-14 bg-zinc-900/50 rounded-2xl flex items-center justify-center">
                     <User className="w-7 h-7 text-neutral-300" />
                   </div>
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">{t('issue.reported_by')}</p>
-                    <p className="text-lg font-bold text-neutral-900">User ID: {issue.reporterUid.slice(0, 8)}...</p>
+                    <p className="text-lg font-bold text-white">User ID: {issue.reporterUid.slice(0, 8)}...</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-12">
                   <div className="text-right">
                     <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">{t('issue.date_reported')}</p>
-                    <p className="text-lg font-bold text-neutral-900">{issue.createdAt ? format(new Date(issue.createdAt), 'MMM dd, yyyy') : 'N/A'}</p>
+                    <p className="text-lg font-bold text-white">{issue.createdAt ? format(new Date(issue.createdAt), 'MMM dd, yyyy') : 'N/A'}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">{t('issue.time')}</p>
-                    <p className="text-lg font-bold text-neutral-900">{issue.createdAt ? format(new Date(issue.createdAt), 'hh:mm a') : 'N/A'}</p>
+                    <p className="text-lg font-bold text-white">{issue.createdAt ? format(new Date(issue.createdAt), 'hh:mm a') : 'N/A'}</p>
                   </div>
                 </div>
               </div>
 
               <div className="space-y-6">
-                <h3 className="text-2xl font-display font-black tracking-tight text-neutral-900">{t('issue.description')}</h3>
-                <p className="text-xl text-neutral-600 leading-relaxed font-medium opacity-80">
+                <h3 className="text-2xl font-display font-black tracking-tight text-white">{t('issue.description')}</h3>
+                <p className="text-xl text-zinc-300 leading-relaxed font-medium opacity-80">
                   {issue.description || t('admin.no_description')}
                 </p>
               </div>
 
               {issue.landmark && (
-                <div className="flex items-center gap-4 p-6 bg-neutral-50 rounded-3xl">
-                  <div className="p-3 bg-white rounded-2xl shadow-sm">
+                <div className="flex items-center gap-4 p-6 bg-zinc-900/50 rounded-3xl">
+                  <div className="p-3 glass-dark rounded-2xl shadow-sm">
                     <MapPin className="w-5 h-5 text-indigo-500" />
                   </div>
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">{t('issue.nearby_landmark')}</p>
-                    <p className="text-lg font-bold text-neutral-900">{issue.landmark}</p>
+                    <p className="text-lg font-bold text-white">{issue.landmark}</p>
                   </div>
                 </div>
               )}
@@ -341,10 +341,10 @@ export default function IssueDetails() {
           {/* Comments Section */}
           <div className="space-y-8">
             <div className="flex items-center justify-between">
-              <h2 className="text-4xl font-display font-black tracking-tighter text-neutral-900">
+              <h2 className="text-4xl font-display font-black tracking-tighter text-white">
                 {t('issue.community')} <span className="text-gradient">{t('issue.discussion')}</span>
               </h2>
-              <span className="px-4 py-2 bg-neutral-50 rounded-xl text-[11px] font-black uppercase tracking-widest text-neutral-400">
+              <span className="px-4 py-2 bg-zinc-900/50 rounded-xl text-[11px] font-black uppercase tracking-widest text-neutral-400">
                 {issue.comments?.length || 0} {t('issue.comments')}
               </span>
             </div>
@@ -353,10 +353,10 @@ export default function IssueDetails() {
             {auth.currentUser ? (
               <form onSubmit={handleComment} className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-3xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
-                <div className={`relative bg-white border-2 rounded-[32px] p-2 flex items-center shadow-2xl transition-all duration-300 ${
+                <div className={`relative glass-dark border-2 rounded-[32px] p-2 flex items-center shadow-2xl transition-all duration-300 ${
                   containsOffensiveContent(commentText)
                     ? 'border-rose-400 ring-4 ring-rose-500/10'
-                    : 'border-neutral-100 group-focus-within:border-indigo-500 group-focus-within:ring-8 group-focus-within:ring-indigo-500/5'
+                    : 'border-white/5 group-focus-within:border-indigo-500 group-focus-within:ring-8 group-focus-within:ring-indigo-500/5'
                 }`}>
                   <div className="pl-6 pr-4">
                     <MessageSquare className={`w-6 h-6 transition-colors ${
@@ -366,7 +366,7 @@ export default function IssueDetails() {
                   <input
                     type="text"
                     placeholder={t('issue.share_thoughts')}
-                    className="flex-1 bg-transparent border-none outline-none py-6 text-lg font-medium text-neutral-900 placeholder:text-neutral-300"
+                    className="flex-1 bg-transparent border-none outline-none py-6 text-lg font-medium text-white placeholder:text-neutral-300"
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                   />
@@ -386,8 +386,8 @@ export default function IssueDetails() {
                 )}
               </form>
             ) : (
-              <div className="bg-neutral-50 rounded-[32px] p-8 text-center">
-                <p className="text-neutral-500 font-bold uppercase tracking-widest text-xs">
+              <div className="bg-zinc-900/50 rounded-[32px] p-8 text-center">
+                <p className="text-zinc-400 font-bold uppercase tracking-widest text-xs">
                   {t('issue.sign_in_discuss')}
                 </p>
               </div>
@@ -403,7 +403,7 @@ export default function IssueDetails() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="bg-white border-2 border-neutral-50 rounded-[32px] p-8 shadow-xl shadow-indigo-500/5 group"
+                    className="glass-dark border-2 border-neutral-50 rounded-[32px] p-8 shadow-xl shadow-indigo-500/5 group"
                   >
                     <div className="flex gap-6">
                       <img 
@@ -414,7 +414,7 @@ export default function IssueDetails() {
                       <div className="flex-1 space-y-2">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <h4 className="text-lg font-black text-neutral-900">{comment.authorName}</h4>
+                            <h4 className="text-lg font-black text-white">{comment.authorName}</h4>
                             <span className="w-1 h-1 bg-neutral-200 rounded-full" />
                             <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">
                               {formatDistanceToNow(new Date(comment.createdAt))} ago
@@ -429,7 +429,7 @@ export default function IssueDetails() {
                             </button>
                           )}
                         </div>
-                        <p className="text-lg text-neutral-600 font-medium leading-relaxed">
+                        <p className="text-lg text-zinc-300 font-medium leading-relaxed">
                           {comment.text}
                         </p>
                       </div>
@@ -450,8 +450,8 @@ export default function IssueDetails() {
         {/* Sidebar */}
         <div className="space-y-8">
           {/* Status Timeline */}
-          <div className="bg-white rounded-[40px] p-8 border-2 border-neutral-100 shadow-xl shadow-indigo-500/5 space-y-8">
-            <h3 className="text-xl font-display font-black tracking-tight text-neutral-900">{t('issue.issue_status')}</h3>
+          <div className="glass-dark rounded-[40px] p-8 border-2 border-white/5 shadow-xl shadow-indigo-500/5 space-y-8">
+            <h3 className="text-xl font-display font-black tracking-tight text-white">{t('issue.issue_status')}</h3>
             <div className="space-y-6">
               {[
                 { label: t('status.reported'), status: 'Pending', icon: Clock, color: 'text-amber-500', bg: 'bg-amber-50' },
@@ -468,15 +468,15 @@ export default function IssueDetails() {
                 return (
                   <div key={i} className="flex items-center gap-4 relative">
                     {i < 3 && (
-                      <div className={`absolute left-6 top-10 w-0.5 h-8 ${isCompleted ? 'bg-indigo-500' : 'bg-neutral-100'}`} />
+                      <div className={`absolute left-6 top-10 w-0.5 h-8 ${isCompleted ? 'bg-indigo-500' : 'bg-zinc-800/50'}`} />
                     )}
                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
-                      isCompleted ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20' : 'bg-neutral-50 text-neutral-300'
+                      isCompleted ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20' : 'bg-zinc-900/50 text-neutral-300'
                     }`}>
                       <step.icon className="w-6 h-6" />
                     </div>
                     <div>
-                      <p className={`text-sm font-black uppercase tracking-widest ${isCompleted ? 'text-neutral-900' : 'text-neutral-300'}`}>
+                      <p className={`text-sm font-black uppercase tracking-widest ${isCompleted ? 'text-white' : 'text-neutral-300'}`}>
                         {step.label}
                       </p>
                       {isCurrent && (
@@ -490,9 +490,9 @@ export default function IssueDetails() {
           </div>
 
           {/* Location Map */}
-          <div className="bg-white rounded-[40px] p-8 border-2 border-neutral-100 shadow-xl shadow-indigo-500/5 space-y-6">
+          <div className="glass-dark rounded-[40px] p-8 border-2 border-white/5 shadow-xl shadow-indigo-500/5 space-y-6">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-display font-black tracking-tight text-neutral-900">{t('issue.location')}</h3>
+              <h3 className="text-xl font-display font-black tracking-tight text-white">{t('issue.location')}</h3>
               <a 
                 href={`https://www.google.com/maps/search/?api=1&query=${issue.latitude},${issue.longitude}`}
                 target="_blank"
@@ -502,7 +502,7 @@ export default function IssueDetails() {
                 {t('issue.open_maps')}
               </a>
             </div>
-            <div className="aspect-square bg-neutral-50 rounded-[32px] relative overflow-hidden border-2 border-neutral-50">
+            <div className="aspect-square bg-zinc-900/50 rounded-[32px] relative overflow-hidden border-2 border-neutral-50">
               <div className="h-full w-full z-0">
                 <MapContainer 
                   center={[issue.latitude, issue.longitude]} 
@@ -518,15 +518,15 @@ export default function IssueDetails() {
                     <Popup>
                       <div className="p-2">
                         <p className="font-bold text-xs">{t(`cat.${issue.category.toLowerCase().replace(' ', '_')}`)}</p>
-                        <p className="text-[10px] text-neutral-500">{issue.address}</p>
+                        <p className="text-[10px] text-zinc-400">{issue.address}</p>
                       </div>
                     </Popup>
                   </Marker>
                 </MapContainer>
               </div>
-              <div className="absolute bottom-4 left-4 right-4 p-3 bg-white/90 backdrop-blur-md rounded-xl border border-white/50 z-[400] pointer-events-none">
+              <div className="absolute bottom-4 left-4 right-4 p-3 glass-dark/90 backdrop-blur-md rounded-xl border border-white/50 z-[400] pointer-events-none">
                 <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-1">{t('issue.coordinates')}</p>
-                <p className="text-xs font-bold text-neutral-900">{issue.latitude.toFixed(4)}, {issue.longitude.toFixed(4)}</p>
+                <p className="text-xs font-bold text-white">{issue.latitude.toFixed(4)}, {issue.longitude.toFixed(4)}</p>
               </div>
             </div>
           </div>
@@ -535,11 +535,11 @@ export default function IssueDetails() {
           <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-[40px] p-8 text-white shadow-2xl shadow-indigo-500/20 space-y-6">
             <h3 className="text-xl font-display font-black tracking-tight">{t('issue.community_impact')}</h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/10">
+              <div className="glass-dark/10 backdrop-blur-md rounded-3xl p-6 border border-white/10">
                 <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-2">{t('issue.upvotes')}</p>
                 <p className="text-3xl font-display font-black">{issue.upvotes?.length || 0}</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/10">
+              <div className="glass-dark/10 backdrop-blur-md rounded-3xl p-6 border border-white/10">
                 <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-2">{t('issue.comments')}</p>
                 <p className="text-3xl font-display font-black">{issue.comments?.length || 0}</p>
               </div>

@@ -29,7 +29,7 @@ const GuideSection = ({ title, icon: Icon, children, delay = 0 }: { title: strin
       <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center">
         <Icon className="w-6 h-6 text-indigo-600" />
       </div>
-      <h2 className="text-2xl font-black tracking-tight text-neutral-900">{title}</h2>
+      <h2 className="text-2xl font-black tracking-tight text-white">{title}</h2>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {children}
@@ -38,13 +38,13 @@ const GuideSection = ({ title, icon: Icon, children, delay = 0 }: { title: strin
 );
 
 const GuideCard = ({ title, description, steps }: { title: string, description: string, steps?: string[] }) => (
-  <div className="bg-white p-8 rounded-[32px] border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
-    <h3 className="text-lg font-bold text-neutral-900 mb-3 group-hover:text-indigo-600 transition-colors">{title}</h3>
-    <p className="text-neutral-500 text-sm leading-relaxed mb-6">{description}</p>
+  <div className="glass-dark p-8 rounded-[32px] border border-white/5 shadow-sm hover:shadow-xl transition-all duration-500 group">
+    <h3 className="text-lg font-bold text-white mb-3 group-hover:text-indigo-600 transition-colors">{title}</h3>
+    <p className="text-zinc-400 text-sm leading-relaxed mb-6">{description}</p>
     {steps && (
       <ul className="space-y-3">
         {steps.map((step, i) => (
-          <li key={i} className="flex items-start gap-3 text-xs font-medium text-neutral-600">
+          <li key={i} className="flex items-start gap-3 text-xs font-medium text-zinc-300">
             <div className="w-5 h-5 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-black">
               {i + 1}
             </div>
@@ -71,10 +71,10 @@ export default function UserGuide() {
           <BookOpen className="w-4 h-4" />
           {t('guide.manual')}
         </div>
-        <h1 className="text-5xl lg:text-6xl font-black tracking-tighter text-neutral-900 mb-6">
+        <h1 className="text-5xl lg:text-6xl font-black tracking-tighter text-white mb-6">
           {t('guide.welcome')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Civic Pillar</span>
         </h1>
-        <p className="text-xl text-neutral-500 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
           {t('guide.desc')}
         </p>
       </motion.div>
@@ -168,7 +168,7 @@ export default function UserGuide() {
           <div className="flex flex-wrap gap-4">
             <button 
               onClick={() => navigate('/report')}
-              className="px-8 py-4 bg-white text-black rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-indigo-50 transition-colors flex items-center gap-2"
+              className="px-8 py-4 glass-dark text-black rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-indigo-50 transition-colors flex items-center gap-2"
             >
               {t('guide.file_first')}
               <ArrowRight className="w-4 h-4" />
