@@ -153,8 +153,6 @@ export default function Dashboard({ user }: DashboardProps) {
     Rejected:     { bg: 'rgba(244,63,94,0.1)',    color: '#F43F5E' },
   };
 
-  const cardStyle = { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 4px 20px rgba(99,102,241,0.06)' };
-
   return (
     <div className="space-y-5">
       {/* Stats */}
@@ -162,8 +160,7 @@ export default function Dashboard({ user }: DashboardProps) {
         {stats.map((stat, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}
             whileHover={{ y: -4, scale: 1.01 }}
-            className="rounded-2xl p-4 cursor-default"
-            style={cardStyle}>
+            className="rounded-2xl p-4 cursor-default glass-dark">
             <div className="flex items-center justify-between mb-3">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: stat.bg }}>
                 <stat.icon className="w-4 h-4" style={{ color: stat.color }} />
@@ -173,21 +170,21 @@ export default function Dashboard({ user }: DashboardProps) {
                 LIVE
               </span>
             </div>
-            <p className="text-2xl font-display font-black tracking-tight" style={{ color: '#1a1a2e' }}>{stat.value}</p>
+            <p className="text-2xl font-display font-black tracking-tight text-white">{stat.value}</p>
             <p className="text-[10px] uppercase tracking-wider font-semibold mt-0.5" style={{ color: 'rgba(26,26,46,0.4)' }}>{stat.label}</p>
           </motion.div>
         ))}
       </div>
 
       {/* Header + Search */}
-      <div className="rounded-2xl p-5" style={cardStyle}>
+      <div className="rounded-2xl p-5 glass-dark">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#6366F1', boxShadow: '0 0 8px rgba(99,102,241,0.5)' }} />
               <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#6366F1' }}>Live Feed</span>
             </div>
-            <h1 className="text-2xl font-display font-black" style={{ color: '#1a1a2e' }}>
+            <h1 className="text-2xl font-display font-black text-white">
               Civic <span className="text-gradient">Intelligence</span>
             </h1>
           </div>
@@ -315,7 +312,7 @@ export default function Dashboard({ user }: DashboardProps) {
 
       {/* Map banner */}
       {viewMode === 'map' && (
-        <div className="flex items-center justify-between px-4 py-3 rounded-xl" style={cardStyle}>
+        <div className="flex items-center justify-between px-4 py-3 rounded-xl glass-dark">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full" style={{ background: userLocation ? '#00FF88' : 'rgba(255,255,255,0.2)', boxShadow: userLocation ? '0 0 8px rgba(0,255,136,0.5)' : 'none' }} />
             <span className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.6)' }}>
