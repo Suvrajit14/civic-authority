@@ -22,7 +22,6 @@ export default function Dashboard({ user }: DashboardProps) {
   const { t } = useI18n();
   const [issues, setIssues] = useState<IssueReport[]>([]);
   const [loading, setLoading] = useState(true);
-  const [hasMore] = useState(false);
   const [activeUsersCount, setActiveUsersCount] = useState<number | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [filter, setFilter] = useState('All');
@@ -57,7 +56,6 @@ export default function Dashboard({ user }: DashboardProps) {
   };
 
   useEffect(() => { handleLocateMe(true); }, []);
-
   useEffect(() => {
     fetch('/api/stats').then(r => r.json()).then(d => setActiveUsersCount(d.activeUsers)).catch(() => {});
   }, []);
@@ -86,7 +84,7 @@ export default function Dashboard({ user }: DashboardProps) {
       const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=8&lang=en&lat=${lat}&lon=${lon}`);
       const data = await res.json();
       const features = (data.features || [])
-        .filter((f: any) => { const cc = f.properties?.countrycode || ''; return cc === 'IN'; })
+        .filter((f: any) => f.properties?.countrycode === 'IN')
         .sort((a: any, b: any) => {
           const [aLon, aLat] = a.geometry.coordinates, [bLon, bLat] = b.geometry.coordinates;
           return Math.hypot(aLat - lat, aLon - lon) - Math.hypot(bLat - lat, bLon - lon);
@@ -125,10 +123,10 @@ export default function Dashboard({ user }: DashboardProps) {
   });
 
   const stats = [
-    { label: 'Total Reports', value: issues.length, icon: TrendingUp, color: 'from-purple-500 to-blue-600', bg: 'bg-purple-50', text: 'text-purple-600' },
-    { label: 'Verified', value: issues.filter(i => i.status === 'Verified').length, icon: CheckCircle2, color: 'from-emerald-400 to-teal-500', bg: 'bg-emerald-50', text: 'text-emerald-600' },
-    { label: 'Pending', value: issues.filter(i => i.status === 'Pending').length, icon: Clock, color: 'from-amber-400 to-orange-500', bg: 'bg-amber-50', text: 'text-amber-600' },
-    { label: 'Active Users', value: activeUsersCount ?? '...', icon: Users, color: 'from-cyan-400 to-blue-500', bg: 'bg-cyan-50', text: 'text-cyan-600' },
+    { label: 'Total Reports', value: issues.length,                                      icon: TrendingUp,   color: '#00FF88', glow: 'rgba(0,255,136,0.25)',  bg: 'rgba(0,255,136,0.1)' },
+    { label: 'Verified',      value: issues.filter(i => i.status === 'Verified').length, icon: CheckCircle2, color: '#00D4FF', glow: 'rgba(0,212,255,0.25)',  bg: 'rgba(0,212,255,0.1)' },
+    { label: 'Pending',       value: issues.filter(i => i.status === 'Pending').length,  icon: Clock,        color: '#FFB800', glow: 'rgba(255,184,0,0.25)',  bg: 'rgba(255,184,0,0.1)' },
+    { label: 'Active Users',  value: activeUsersCount ?? '...',                          icon: Users,        color: '#BF5FFF', glow: 'rgba(191,95,255,0.25)', bg: 'rgba(191,95,255,0.1)' },
   ];
 
   const center: [number, number] = userLocation ?? (filteredIssues.length > 0
@@ -146,54 +144,70 @@ export default function Dashboard({ user }: DashboardProps) {
     return null;
   }
 
-  const STATUS_COLORS: Record<string, string> = {
-    All: 'bg-neutral-900 text-white', Pending: 'bg-amber-500 text-white',
-    Verified: 'bg-purple-600 text-white', 'In Progress': 'bg-blue-500 text-white',
-    Resolved: 'bg-emerald-500 text-white', Rejected: 'bg-rose-500 text-white',
+  const STATUS_NEON: Record<string, { bg: string; color: string }> = {
+    All:          { bg: 'rgba(255,255,255,0.1)',   color: 'white' },
+    Pending:      { bg: 'rgba(255,184,0,0.15)',    color: '#FFB800' },
+    Verified:     { bg: 'rgba(0,255,136,0.15)',    color: '#00FF88' },
+    'In Progress':{ bg: 'rgba(0,212,255,0.15)',    color: '#00D4FF' },
+    Resolved:     { bg: 'rgba(0,255,136,0.15)',    color: '#00FF88' },
+    Rejected:     { bg: 'rgba(255,60,172,0.15)',   color: '#FF3CAC' },
   };
 
+  const cardStyle = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {stats.map((stat, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}
-            className="bg-white rounded-2xl border border-neutral-100 p-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+            className="rounded-2xl p-4 transition-all duration-200 hover:-translate-y-0.5 cursor-default"
+            style={cardStyle}>
             <div className="flex items-center justify-between mb-3">
-              <div className={`w-9 h-9 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center shadow-sm`}>
-                <stat.icon className="w-4 h-4 text-white" />
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: stat.bg, boxShadow: `0 0 15px ${stat.glow}` }}>
+                <stat.icon className="w-4 h-4" style={{ color: stat.color }} />
               </div>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ${stat.bg} ${stat.text}`}>Live</span>
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: stat.bg, color: stat.color }}>
+                <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: stat.color }} />
+                LIVE
+              </span>
             </div>
-            <p className="text-2xl font-display font-black text-neutral-900 tracking-tight">{stat.value}</p>
-            <p className="text-[10px] uppercase tracking-wider text-neutral-400 font-semibold mt-0.5">{stat.label}</p>
+            <p className="text-2xl font-display font-black text-white tracking-tight">{stat.value}</p>
+            <p className="text-[10px] uppercase tracking-wider font-semibold mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{stat.label}</p>
           </motion.div>
         ))}
       </div>
 
-      {/* Header */}
-      <div className="bg-white rounded-2xl border border-neutral-100 p-5 shadow-sm">
+      {/* Header + Search */}
+      <div className="rounded-2xl p-5" style={cardStyle}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-purple-500">Live Feed</span>
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#00FF88', boxShadow: '0 0 8px rgba(0,255,136,0.6)' }} />
+              <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#00FF88' }}>Live Feed</span>
             </div>
-            <h1 className="text-2xl font-display font-black text-neutral-900">
+            <h1 className="text-2xl font-display font-black text-white">
               Civic <span className="text-gradient">Intelligence</span>
             </h1>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex bg-neutral-100 p-1 rounded-xl">
-              <button onClick={() => setViewMode('grid')} className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all ${viewMode === 'grid' ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-400'}`}>
+            <div className="flex p-1 rounded-xl" style={{ background: 'rgba(255,255,255,0.05)' }}>
+              <button onClick={() => setViewMode('grid')}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all"
+                style={viewMode === 'grid' ? { background: 'rgba(0,255,136,0.15)', color: '#00FF88' } : { color: 'rgba(255,255,255,0.4)' }}>
                 <ListIcon className="w-3.5 h-3.5" /> Grid
               </button>
-              <button onClick={() => setViewMode('map')} className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all ${viewMode === 'map' ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-400'}`}>
+              <button onClick={() => setViewMode('map')}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all"
+                style={viewMode === 'map' ? { background: 'rgba(0,212,255,0.15)', color: '#00D4FF' } : { color: 'rgba(255,255,255,0.4)' }}>
                 <MapIcon className="w-3.5 h-3.5" /> Map
               </button>
             </div>
             <button onClick={() => handleLocateMe(false)} disabled={isLocating}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-bold transition-all ${userLocation ? 'border-purple-300 text-purple-600 bg-purple-50' : 'border-neutral-200 text-neutral-500 bg-white'}`}>
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all"
+              style={userLocation
+                ? { background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.25)' }
+                : { background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.08)' }}>
               {isLocating ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <MapPin className="w-3.5 h-3.5" />}
               {userLocation ? locationAddress || 'Located' : 'Near Me'}
             </button>
@@ -202,13 +216,18 @@ export default function Dashboard({ user }: DashboardProps) {
 
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-300" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.25)' }} />
           <input type="text" placeholder="Search locations, institutes, descriptions..."
             value={search} onChange={e => handleSearchChange(e.target.value)}
             onFocus={() => setShowSuggestions(true)} onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-            className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2.5 pl-10 pr-9 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/10 transition-all"
+            className="w-full rounded-xl py-2.5 pl-10 pr-9 text-sm transition-all input-dark"
           />
-          {search && <button onClick={() => { setSearch(''); setLocationSuggestions([]); }} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-300 hover:text-neutral-500"><X className="w-4 h-4" /></button>}
+          {search && (
+            <button onClick={() => { setSearch(''); setLocationSuggestions([]); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.3)' }}>
+              <X className="w-4 h-4" />
+            </button>
+          )}
 
           {showSuggestions && search.length >= 1 && (() => {
             const issueMatches = issues.filter(i => i.address.toLowerCase().includes(search.toLowerCase()) || i.description?.toLowerCase().includes(search.toLowerCase())).slice(0, 2)
@@ -216,22 +235,34 @@ export default function Dashboard({ user }: DashboardProps) {
             const locMatches = locationSuggestions.map((s: any) => ({ kind: 'place' as const, primary: s.primary, secondary: s.secondary, fullText: s.fullText }));
             const all = [...issueMatches, ...locMatches];
             return (
-              <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-neutral-200 rounded-xl shadow-xl z-50 overflow-hidden max-h-64 overflow-y-auto">
-                {suggestionsLoading && <div className="flex items-center gap-2 px-4 py-2.5 text-xs text-neutral-400"><Loader2 className="w-3 h-3 animate-spin" /> Searching...</div>}
+              <div className="absolute top-full left-0 right-0 mt-1.5 rounded-xl shadow-2xl z-50 overflow-hidden max-h-64 overflow-y-auto"
+                style={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)' }}>
+                {suggestionsLoading && (
+                  <div className="flex items-center gap-2 px-4 py-2.5 text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                    <Loader2 className="w-3 h-3 animate-spin" /> Searching...
+                  </div>
+                )}
                 {all.length > 0 ? all.map((s, i) => (
                   <button key={i} onMouseDown={() => { setSearch(s.fullText); setShowSuggestions(false); }}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-purple-50 transition-colors text-left border-b border-neutral-50 last:border-0">
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${s.kind === 'issue' ? 'bg-purple-50 text-purple-500' : 'bg-emerald-50 text-emerald-600'}`}>
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-left transition-all"
+                    style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(0,255,136,0.05)'}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                      style={{ background: s.kind === 'issue' ? 'rgba(0,255,136,0.1)' : 'rgba(0,212,255,0.1)', color: s.kind === 'issue' ? '#00FF88' : '#00D4FF' }}>
                       <MapPin className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-neutral-900 truncate">{s.primary}</p>
-                      <p className="text-[11px] text-neutral-400 truncate">{s.secondary}</p>
+                      <p className="text-sm font-semibold text-white truncate">{s.primary}</p>
+                      <p className="text-[11px] truncate" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.secondary}</p>
                     </div>
-                    {s.kind === 'issue' && <span className="text-[9px] font-bold bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full shrink-0">Report</span>}
+                    {s.kind === 'issue' && (
+                      <span className="text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0"
+                        style={{ background: 'rgba(0,255,136,0.15)', color: '#00FF88' }}>Report</span>
+                    )}
                   </button>
                 )) : !suggestionsLoading && search.length >= 2 ? (
-                  <div className="px-4 py-3 text-sm text-neutral-400 text-center">No results for "{search}"</div>
+                  <div className="px-4 py-3 text-sm text-center" style={{ color: 'rgba(255,255,255,0.3)' }}>No results for "{search}"</div>
                 ) : null}
               </div>
             );
@@ -242,28 +273,40 @@ export default function Dashboard({ user }: DashboardProps) {
       {/* Filters */}
       <div className="space-y-2">
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-          {['All', 'Pending', 'Verified', 'In Progress', 'Resolved', 'Rejected'].map(s => (
-            <button key={s} onClick={() => setStatusFilter(s)}
-              className={`px-3.5 py-1.5 rounded-lg text-[11px] font-bold whitespace-nowrap transition-all ${statusFilter === s ? STATUS_COLORS[s] + ' shadow-sm' : 'bg-white text-neutral-500 border border-neutral-200 hover:border-neutral-300'}`}>
-              {s === 'All' ? 'All Status' : s}
-            </button>
-          ))}
+          {['All', 'Pending', 'Verified', 'In Progress', 'Resolved', 'Rejected'].map(s => {
+            const neon = STATUS_NEON[s];
+            const isActive = statusFilter === s;
+            return (
+              <button key={s} onClick={() => setStatusFilter(s)}
+                className="px-3.5 py-1.5 rounded-lg text-[11px] font-bold whitespace-nowrap transition-all"
+                style={isActive
+                  ? { background: neon.bg, color: neon.color, border: `1px solid ${neon.color}40` }
+                  : { background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                {s === 'All' ? 'All Status' : s}
+              </button>
+            );
+          })}
         </div>
         <div className="flex items-center gap-2">
           <button onClick={() => { const el = document.getElementById('cat-scroll'); el?.scrollBy({ left: -180, behavior: 'smooth' }); }}
-            className="shrink-0 w-7 h-7 bg-white border border-neutral-200 rounded-lg flex items-center justify-center text-neutral-400 hover:text-neutral-700 transition-all">
+            className="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-all"
+            style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.07)' }}>
             <ChevronDown className="w-3.5 h-3.5 rotate-90" />
           </button>
           <div id="cat-scroll" className="flex items-center gap-2 overflow-x-auto no-scrollbar flex-1 pb-1">
             {['All', 'Traffic', 'Road', 'Emergency', 'Safety', 'Sanitation', 'Water', 'Electricity', 'Environment', 'Infrastructure', 'Public Health'].map(cat => (
               <button key={cat} onClick={() => setFilter(cat)}
-                className={`px-3.5 py-1.5 rounded-lg text-[11px] font-bold whitespace-nowrap transition-all ${filter === cat ? 'bg-neutral-900 text-white shadow-sm' : 'bg-white text-neutral-500 border border-neutral-200 hover:border-neutral-300'}`}>
+                className="px-3.5 py-1.5 rounded-lg text-[11px] font-bold whitespace-nowrap transition-all"
+                style={filter === cat
+                  ? { background: 'rgba(0,255,136,0.12)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.25)' }
+                  : { background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.07)' }}>
                 {cat === 'All' ? 'All' : cat}
               </button>
             ))}
           </div>
           <button onClick={() => { const el = document.getElementById('cat-scroll'); el?.scrollBy({ left: 180, behavior: 'smooth' }); }}
-            className="shrink-0 w-7 h-7 bg-white border border-neutral-200 rounded-lg flex items-center justify-center text-neutral-400 hover:text-neutral-700 transition-all">
+            className="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-all"
+            style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.07)' }}>
             <ChevronDown className="w-3.5 h-3.5 -rotate-90" />
           </button>
         </div>
@@ -271,13 +314,16 @@ export default function Dashboard({ user }: DashboardProps) {
 
       {/* Map banner */}
       {viewMode === 'map' && (
-        <div className="flex items-center justify-between px-4 py-3 bg-white border border-neutral-200 rounded-xl shadow-sm">
+        <div className="flex items-center justify-between px-4 py-3 rounded-xl" style={cardStyle}>
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${userLocation ? 'bg-emerald-500 animate-pulse' : 'bg-neutral-300'}`} />
-            <span className="text-xs font-semibold text-neutral-600">{userLocation ? `📍 ${locationAddress || `${userLocation[0].toFixed(4)}, ${userLocation[1].toFixed(4)}`}` : 'Location not detected'}</span>
+            <span className="w-2 h-2 rounded-full" style={{ background: userLocation ? '#00FF88' : 'rgba(255,255,255,0.2)', boxShadow: userLocation ? '0 0 8px rgba(0,255,136,0.5)' : 'none' }} />
+            <span className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.6)' }}>
+              {userLocation ? `📍 ${locationAddress || `${userLocation[0].toFixed(4)}, ${userLocation[1].toFixed(4)}`}` : 'Location not detected'}
+            </span>
           </div>
           <button onClick={() => handleLocateMe(false)} disabled={isLocating}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold hover:bg-purple-100 transition-all disabled:opacity-50">
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all disabled:opacity-50"
+            style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }}>
             {isLocating ? <Loader2 className="w-3 h-3 animate-spin" /> : <MapPin className="w-3 h-3" />}
             {userLocation ? 'Refresh' : 'Detect'}
           </button>
@@ -290,9 +336,16 @@ export default function Dashboard({ user }: DashboardProps) {
       ) : viewMode === 'grid' ? (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold text-neutral-400">{filteredIssues.length} report{filteredIssues.length !== 1 ? 's' : ''}{statusFilter !== 'All' ? ` · ${statusFilter}` : ''}{filter !== 'All' ? ` · ${filter}` : ''}</p>
+            <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              {filteredIssues.length} report{filteredIssues.length !== 1 ? 's' : ''}
+              {statusFilter !== 'All' ? ` · ${statusFilter}` : ''}
+              {filter !== 'All' ? ` · ${filter}` : ''}
+            </p>
             <button onClick={() => setShowFake(!showFake)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all ${showFake ? 'bg-rose-500 text-white border-transparent' : 'bg-white text-neutral-400 border-neutral-200'}`}>
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all"
+              style={showFake
+                ? { background: 'rgba(255,60,172,0.15)', color: '#FF3CAC', border: '1px solid rgba(255,60,172,0.3)' }
+                : { background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.07)' }}>
               <ShieldAlert className="w-3 h-3" /> {showFake ? 'Hide Fake' : 'Show Fake'}
             </button>
           </div>
@@ -301,26 +354,26 @@ export default function Dashboard({ user }: DashboardProps) {
               {filteredIssues.map(issue => <IssueCard key={issue.id} issue={issue} user={user} />)}
             </div>
           ) : (
-            <div className="h-64 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-neutral-200">
-              <AlertCircle className="w-10 h-10 text-neutral-200 mb-3" />
-              <p className="text-sm font-semibold text-neutral-400">No reports found</p>
-              <p className="text-xs text-neutral-300 mt-1">Try adjusting your filters</p>
+            <div className="h-64 flex flex-col items-center justify-center rounded-2xl" style={{ border: '1px dashed rgba(255,255,255,0.1)' }}>
+              <AlertCircle className="w-10 h-10 mb-3" style={{ color: 'rgba(255,255,255,0.15)' }} />
+              <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.3)' }}>No reports found</p>
+              <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.2)' }}>Try adjusting your filters</p>
             </div>
           )}
         </div>
       ) : (
-        <div className="h-[420px] lg:h-[560px] bg-neutral-100 rounded-2xl overflow-hidden border border-neutral-200 shadow-sm relative">
+        <div className="h-[420px] lg:h-[560px] rounded-2xl overflow-hidden relative" style={{ border: '1px solid rgba(255,255,255,0.07)' }}>
           <MapContainer center={center} zoom={12} scrollWheelZoom className="h-full w-full z-0">
             <ChangeView issues={filteredIssues} userLocation={userLocation} />
             <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            {userLocation && <Marker position={userLocation}><Popup><p className="font-bold text-xs text-purple-600">You are here</p></Popup></Marker>}
+            {userLocation && <Marker position={userLocation}><Popup><p className="font-bold text-xs" style={{ color: '#00FF88' }}>You are here</p></Popup></Marker>}
             {filteredIssues.map(issue => (
               <Marker key={issue.id} position={[issue.latitude, issue.longitude]}>
                 <Popup>
                   <div className="p-2 max-w-[200px]">
                     <img src={issue.imageUrl} className="w-full aspect-video object-cover rounded-lg mb-2" alt="Issue" />
                     <p className="text-xs font-semibold text-neutral-800 line-clamp-2 mb-1">{issue.description}</p>
-                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${issue.status === 'Verified' ? 'bg-purple-100 text-purple-700' : 'bg-amber-100 text-amber-700'}`}>{issue.status}</span>
+                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">{issue.status}</span>
                   </div>
                 </Popup>
               </Marker>

@@ -13,9 +13,9 @@ interface FeedEvent {
 }
 
 const EVENT_CONFIG = {
-  new_issue:     { bg: 'bg-amber-50',   text: 'text-amber-600',  border: 'border-amber-100',  label: 'New Report' },
-  comment:       { bg: 'bg-purple-50',  text: 'text-purple-600', border: 'border-purple-100', label: 'Comment' },
-  status_change: { bg: 'bg-emerald-50', text: 'text-emerald-600',border: 'border-emerald-100',label: 'Update' },
+  new_issue:     { color: '#FFB800', bg: 'rgba(255,184,0,0.1)',   border: 'rgba(255,184,0,0.2)',   label: 'New Report' },
+  comment:       { color: '#BF5FFF', bg: 'rgba(191,95,255,0.1)',  border: 'rgba(191,95,255,0.2)',  label: 'Comment' },
+  status_change: { color: '#00FF88', bg: 'rgba(0,255,136,0.1)',   border: 'rgba(0,255,136,0.2)',   label: 'Update' },
 };
 
 export default function LiveFeed() {
@@ -48,32 +48,34 @@ export default function LiveFeed() {
   }, []);
 
   const getIcon = (type: FeedEvent['type'], status?: string) => {
-    if (type === 'new_issue') return <AlertTriangle className="w-4 h-4 text-amber-500" />;
-    if (type === 'comment') return <MessageSquare className="w-4 h-4 text-purple-500" />;
-    if (status === 'Resolved') return <CheckCircle2 className="w-4 h-4 text-emerald-500" />;
-    if (status === 'Verified') return <Shield className="w-4 h-4 text-purple-500" />;
-    if (status === 'In Progress') return <Zap className="w-4 h-4 text-blue-500" />;
-    return <Clock className="w-4 h-4 text-neutral-400" />;
+    if (type === 'new_issue') return <AlertTriangle className="w-4 h-4" style={{ color: '#FFB800' }} />;
+    if (type === 'comment') return <MessageSquare className="w-4 h-4" style={{ color: '#BF5FFF' }} />;
+    if (status === 'Resolved') return <CheckCircle2 className="w-4 h-4" style={{ color: '#00FF88' }} />;
+    if (status === 'Verified') return <Shield className="w-4 h-4" style={{ color: '#00D4FF' }} />;
+    if (status === 'In Progress') return <Zap className="w-4 h-4" style={{ color: '#00D4FF' }} />;
+    return <Clock className="w-4 h-4" style={{ color: 'rgba(255,255,255,0.3)' }} />;
   };
 
+  const cardStyle = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' };
+
   return (
-    <div className="max-w-2xl mx-auto space-y-5 pb-10">
+    <div className="max-w-2xl mx-auto space-y-4 pb-10">
       {/* Header */}
-      <div className="bg-gradient-to-br from-[#0D0D0D] to-[#1a1a2e] rounded-2xl p-6 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-40 h-40 bg-rose-500/10 rounded-full blur-3xl" />
+      <div className="rounded-2xl p-6 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(255,60,172,0.08) 0%, rgba(191,95,255,0.05) 100%)', border: '1px solid rgba(255,60,172,0.15)' }}>
+        <div className="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl pointer-events-none" style={{ background: 'rgba(255,60,172,0.06)' }} />
         <div className="relative z-10 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg shadow-rose-500/30">
-              <Radio className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(255,60,172,0.15)', boxShadow: '0 0 20px rgba(255,60,172,0.2)' }}>
+              <Radio className="w-5 h-5" style={{ color: '#FF3CAC' }} />
             </div>
             <div>
-              <h1 className="text-xl font-display font-black">Live Feed</h1>
-              <p className="text-white/40 text-xs">Real-time civic activity</p>
+              <h1 className="text-xl font-display font-black text-white">Live Feed</h1>
+              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Real-time civic activity</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-xl border border-white/10">
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-            <span className="text-white/60 text-xs font-bold">LIVE</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#FF3CAC', boxShadow: '0 0 8px rgba(255,60,172,0.6)' }} />
+            <span className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>LIVE</span>
           </div>
         </div>
       </div>
@@ -81,8 +83,8 @@ export default function LiveFeed() {
       {/* Feed */}
       {loading ? (
         <div className="flex flex-col items-center justify-center py-16 gap-3">
-          <div className="w-10 h-10 border-3 border-purple-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-xs font-semibold text-neutral-400 uppercase tracking-widest">Synchronizing...</p>
+          <div className="w-10 h-10 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(0,255,136,0.2)', borderTopColor: '#00FF88' }} />
+          <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.3)' }}>Synchronizing...</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -91,28 +93,35 @@ export default function LiveFeed() {
               const cfg = EVENT_CONFIG[event.type];
               return (
                 <motion.div key={event.id} layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97 }} transition={{ delay: Math.min(i * 0.03, 0.3) }}
-                  className="bg-white rounded-2xl border border-neutral-100 p-4 hover:shadow-md hover:border-neutral-200 transition-all group">
+                  className="rounded-2xl p-4 transition-all group cursor-default"
+                  style={cardStyle}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = cfg.border; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.07)'; }}>
                   <div className="flex gap-3">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${cfg.bg}`}>
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: cfg.bg }}>
                       {getIcon(event.type, event.status)}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-1">
                         <div className="flex items-center gap-2">
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${cfg.bg} ${cfg.text}`}>{cfg.label}</span>
-                          <span className="text-[10px] text-neutral-300">{event.timestamp ? formatDistanceToNow(new Date(event.timestamp), { addSuffix: true }) : ''}</span>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md" style={{ background: cfg.bg, color: cfg.color }}>{cfg.label}</span>
+                          <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                            {event.timestamp ? formatDistanceToNow(new Date(event.timestamp), { addSuffix: true }) : ''}
+                          </span>
                         </div>
-                        <Link to={`/issue/${event.issueId}`} className="opacity-0 group-hover:opacity-100 flex items-center gap-1 text-[10px] font-bold text-purple-600 hover:text-purple-700 transition-all">
+                        <Link to={`/issue/${event.issueId}`}
+                          className="opacity-0 group-hover:opacity-100 flex items-center gap-1 text-[10px] font-bold transition-all"
+                          style={{ color: cfg.color }}>
                           View <ArrowUpRight className="w-3 h-3" />
                         </Link>
                       </div>
-                      <p className="text-sm font-semibold text-neutral-800 mb-1">{event.title}</p>
-                      <p className="text-xs text-neutral-500 line-clamp-2">{event.description}</p>
+                      <p className="text-sm font-semibold text-white mb-1">{event.title}</p>
+                      <p className="text-xs line-clamp-2" style={{ color: 'rgba(255,255,255,0.4)' }}>{event.description}</p>
                       <div className="flex items-center gap-3 mt-2">
-                        <span className="flex items-center gap-1 text-[10px] text-neutral-300">
+                        <span className="flex items-center gap-1 text-[10px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
                           <MapPin className="w-3 h-3" /> {event.address.split(',')[0]}
                         </span>
-                        <span className="text-[10px] text-neutral-300">· {event.category}</span>
+                        <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.25)' }}>· {event.category}</span>
                       </div>
                     </div>
                   </div>
@@ -121,9 +130,9 @@ export default function LiveFeed() {
             })}
           </AnimatePresence>
           {events.length === 0 && (
-            <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-neutral-200">
-              <Activity className="w-10 h-10 text-neutral-200 mx-auto mb-3" />
-              <p className="text-sm font-semibold text-neutral-400">No activity yet</p>
+            <div className="text-center py-16 rounded-2xl" style={{ border: '1px dashed rgba(255,255,255,0.08)' }}>
+              <Activity className="w-10 h-10 mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.15)' }} />
+              <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.3)' }}>No activity yet</p>
             </div>
           )}
         </div>

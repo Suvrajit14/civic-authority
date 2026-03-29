@@ -8,10 +8,10 @@ import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n';
 
 const TYPE_CONFIG = {
-  status_change: { icon: CheckCircle2, bg: 'bg-emerald-50', text: 'text-emerald-600', border: 'border-emerald-100' },
-  comment:       { icon: MessageSquare, bg: 'bg-purple-50',  text: 'text-purple-600',  border: 'border-purple-100' },
-  broadcast:     { icon: Globe,         bg: 'bg-blue-50',    text: 'text-blue-600',    border: 'border-blue-100' },
-  system:        { icon: AlertCircle,   bg: 'bg-amber-50',   text: 'text-amber-600',   border: 'border-amber-100' },
+  status_change: { icon: CheckCircle2, color: '#00FF88', bg: 'rgba(0,255,136,0.1)',  border: 'rgba(0,255,136,0.2)' },
+  comment:       { icon: MessageSquare,color: '#00D4FF', bg: 'rgba(0,212,255,0.1)',  border: 'rgba(0,212,255,0.2)' },
+  broadcast:     { icon: Globe,        color: '#BF5FFF', bg: 'rgba(191,95,255,0.1)', border: 'rgba(191,95,255,0.2)' },
+  system:        { icon: AlertCircle,  color: '#FFB800', bg: 'rgba(255,184,0,0.1)',  border: 'rgba(255,184,0,0.2)' },
 };
 
 export default function Notifications() {
@@ -45,35 +45,42 @@ export default function Notifications() {
   };
 
   const unreadCount = notifications.filter(n => !n.read).length;
+  const cardStyle = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' };
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-[50vh]">
-      <div className="w-10 h-10 border-3 border-purple-500 border-t-transparent rounded-full animate-spin" />
+      <div className="w-10 h-10 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(0,255,136,0.2)', borderTopColor: '#00FF88' }} />
     </div>
   );
 
   return (
-    <div className="max-w-2xl mx-auto space-y-5 pb-10">
+    <div className="max-w-2xl mx-auto space-y-4 pb-10">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-neutral-100 p-5 shadow-sm">
+      <div className="rounded-2xl p-5" style={cardStyle}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
-              <Bell className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0,255,136,0.1)', boxShadow: '0 0 20px rgba(0,255,136,0.15)' }}>
+              <Bell className="w-5 h-5" style={{ color: '#00FF88' }} />
             </div>
             <div>
-              <h1 className="text-xl font-display font-black text-neutral-900">Notifications</h1>
-              <p className="text-xs text-neutral-400">{unreadCount > 0 ? `${unreadCount} unread` : 'All caught up'}</p>
+              <h1 className="text-xl font-display font-black text-white">Notifications</h1>
+              <p className="text-xs" style={{ color: unreadCount > 0 ? '#00FF88' : 'rgba(255,255,255,0.35)' }}>
+                {unreadCount > 0 ? `${unreadCount} unread` : 'All caught up'}
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {unreadCount > 0 && (
-              <button onClick={markAllAsRead} className="px-3 py-1.5 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold hover:bg-purple-100 transition-all">
+              <button onClick={markAllAsRead}
+                className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
+                style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }}>
                 Mark all read
               </button>
             )}
             {notifications.length > 0 && (
-              <button onClick={() => setNotifications([])} className="px-3 py-1.5 bg-neutral-50 text-neutral-400 rounded-lg text-xs font-bold hover:bg-rose-50 hover:text-rose-500 transition-all">
+              <button onClick={() => setNotifications([])}
+                className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
+                style={{ background: 'rgba(255,60,172,0.1)', color: '#FF3CAC', border: '1px solid rgba(255,60,172,0.2)' }}>
                 Clear all
               </button>
             )}
@@ -90,35 +97,40 @@ export default function Notifications() {
               const Icon = cfg.icon;
               return (
                 <motion.div key={n.id} layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97 }}
-                  className={`group bg-white rounded-2xl border p-4 transition-all hover:shadow-md ${n.read ? 'border-neutral-100 opacity-70' : `${cfg.border} shadow-sm`}`}>
+                  className="group rounded-2xl p-4 transition-all"
+                  style={{ background: n.read ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)', border: `1px solid ${n.read ? 'rgba(255,255,255,0.05)' : cfg.border}` }}>
                   <div className="flex gap-3">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${cfg.bg} ${cfg.text}`}>
-                      <Icon className="w-4 h-4" />
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: cfg.bg }}>
+                      <Icon className="w-4 h-4" style={{ color: cfg.color }} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-1">
-                        <p className={`text-sm font-bold leading-tight ${n.read ? 'text-neutral-500' : 'text-neutral-900'}`}>{n.title}</p>
-                        <span className="text-[10px] text-neutral-300 shrink-0 flex items-center gap-1">
+                        <p className="text-sm font-bold leading-tight" style={{ color: n.read ? 'rgba(255,255,255,0.5)' : 'white' }}>{n.title}</p>
+                        <span className="text-[10px] shrink-0 flex items-center gap-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
                           <Clock className="w-2.5 h-2.5" />
                           {n.createdAt ? formatDistanceToNow(new Date(n.createdAt), { addSuffix: true }) : ''}
                         </span>
                       </div>
-                      <p className="text-xs text-neutral-500 leading-relaxed">{n.message}</p>
+                      <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>{n.message}</p>
                       {n.issueId && (
                         <Link to={`/issue/${n.issueId}`} onClick={() => markAsRead(n.id)}
-                          className="inline-flex items-center gap-1 mt-2 text-[11px] font-bold text-purple-600 hover:text-purple-700 transition-colors">
+                          className="inline-flex items-center gap-1 mt-2 text-[11px] font-bold transition-colors"
+                          style={{ color: cfg.color }}>
                           View Issue <ArrowRight className="w-3 h-3" />
                         </Link>
                       )}
                     </div>
                     <div className="flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                       {!n.read && (
-                        <button onClick={() => markAsRead(n.id)} className="w-7 h-7 bg-purple-50 text-purple-500 rounded-lg flex items-center justify-center hover:bg-purple-100 transition-all">
+                        <button onClick={() => markAsRead(n.id)}
+                          className="w-7 h-7 rounded-lg flex items-center justify-center transition-all"
+                          style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88' }}>
                           <Check className="w-3.5 h-3.5" />
                         </button>
                       )}
                       <button onClick={() => setNotifications(prev => prev.filter(x => x.id !== n.id))}
-                        className="w-7 h-7 bg-rose-50 text-rose-400 rounded-lg flex items-center justify-center hover:bg-rose-100 transition-all">
+                        className="w-7 h-7 rounded-lg flex items-center justify-center transition-all"
+                        style={{ background: 'rgba(255,60,172,0.1)', color: '#FF3CAC' }}>
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     </div>
@@ -129,12 +141,12 @@ export default function Notifications() {
           </AnimatePresence>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-dashed border-neutral-200 p-16 text-center">
-          <div className="w-14 h-14 bg-neutral-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Bell className="w-7 h-7 text-neutral-200" />
+        <div className="rounded-2xl p-16 text-center" style={{ border: '1px dashed rgba(255,255,255,0.08)' }}>
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'rgba(255,255,255,0.04)' }}>
+            <Bell className="w-7 h-7" style={{ color: 'rgba(255,255,255,0.15)' }} />
           </div>
-          <h3 className="text-base font-bold text-neutral-900 mb-1">All caught up!</h3>
-          <p className="text-sm text-neutral-400">No new notifications</p>
+          <p className="text-base font-bold text-white mb-1">All caught up!</p>
+          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>No new notifications</p>
         </div>
       )}
     </div>
