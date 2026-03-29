@@ -723,10 +723,11 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                 }`}>
                   <div className={`w-2 h-2 rounded-full ${location ? 'bg-emerald-500 animate-pulse' : 'bg-amber-400 animate-pulse'}`} />
                   {location
-                    ? `📍 Location locked: ${address ? address.split(',').slice(0, 2).join(',') : `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`}`
+                    ? `📍 ${address ? address.split(',').slice(0, 3).join(',') : `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`}`
                     : 'Detecting your location automatically...'}
                 </div>
-                <div className="h-[300px] rounded-[32px] overflow-hidden border-2 border-neutral-100 shadow-inner relative">
+
+                <div className="h-[320px] rounded-2xl overflow-hidden border border-neutral-200 shadow-sm relative">
                   <MapContainer 
                     center={location ? [location.lat, location.lng] : [20.2961, 85.8245]} 
                     zoom={15} 
@@ -739,11 +740,27 @@ export default function ReportForm({ onSuccess }: ReportFormProps) {
                     />
                     <LocationPicker location={location} updateLocation={updateLocation} />
                   </MapContainer>
-                  <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-neutral-100 shadow-lg z-10">
-                    <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">{t('report.detected_address')}</p>
-                    <p className="text-xs font-bold text-neutral-900 truncate">{address || t('report.click_map')}</p>
-                  </div>
+
+                  {/* My Location button on map */}
+                  <button
+                    type="button"
+                    onClick={() => getCurrentLocation(false)}
+                    className="absolute top-3 right-3 z-[500] flex items-center gap-2 px-3 py-2 bg-white border border-neutral-200 rounded-xl shadow-md text-xs font-bold text-purple-600 hover:bg-purple-50 transition-all"
+                  >
+                    <MapPin className="w-3.5 h-3.5" />
+                    My Location
+                  </button>
+
+                  {/* Address overlay at bottom */}
+                  {address && (
+                    <div className="absolute bottom-3 left-3 right-3 z-[500] bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl border border-neutral-100 shadow-lg">
+                      <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-0.5">Selected Location</p>
+                      <p className="text-xs font-bold text-neutral-900 truncate">📍 {address.split(',').slice(0, 4).join(',')}</p>
+                    </div>
+                  )}
                 </div>
+
+                <p className="text-[10px] text-neutral-400 font-medium ml-1">💡 Tap anywhere on the map to select a location, or click "My Location" to use your current position.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
