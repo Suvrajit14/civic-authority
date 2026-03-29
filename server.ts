@@ -72,16 +72,6 @@ app.get("/api/stats", async (_req, res) => {
 // Health check v2
 app.get("/health", (_req, res) => res.json({ status: "ok", version: 2 }));
 
-// One-time admin setup
-app.post("/api/make-admin", async (req, res) => {
-  const { email, secret } = req.body;
-  if (secret !== "civic-admin-2024") return res.status(403).json({ msg: "Invalid secret" });
-  const User = (await import("./src/models/User.js")).default;
-  const user = await User.findOneAndUpdate({ email }, { role: "admin" }, { new: true });
-  if (!user) return res.status(404).json({ msg: "User not found" });
-  res.json({ msg: `${user.email} is now admin` });
-});
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
