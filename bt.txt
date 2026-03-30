@@ -1,0 +1,286 @@
+1: `import React, { useState } from 'react';
+2: import { loginUser, registerUser } from '../services/api';
+3: import { Shield, Mail, Lock, User, Eye, EyeOff, Loader2, ArrowRight, CheckCircle2, MapPin, Bell, BarChart3, ArrowLeft, KeyRound, Sparkles } from 'lucide-react';
+4: import { motion, AnimatePresence } from 'motion/react';
+5: import { toast } from 'sonner';
+6: import { Toaster } from 'sonner';
+7: import { API_BASE } from '../services/apiBase';
+8: 
+9: type Mode = 'login' | 'register' | 'forgot' | 'reset';
+10: 
+11: const features = [
+12:   { icon: MapPin,    title: 'Report Issues',   desc: 'Pin civic problems on the map instantly', color: '#10B981', bg: 'rgba(16,185,129,0.1)' },
+13:   { icon: Shield,    title: 'AI Verification', desc: 'Every report verified by Gemini AI',       color: '#6366F1', bg: 'rgba(99,102,241,0.1)' },
+14:   { icon: Bell,      title: 'Live Updates',    desc: 'Real-time status notifications',            color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)' },
+15:   { icon: BarChart3, title: 'Analytics',       desc: 'Track resolution trends & insights',       color: '#3B82F6', bg: 'rgba(59,130,246,0.1)' },
+16: ];
+17: 
+18: export default function Auth() {
+19:   const [mode, setMode] = useState<Mode>('login');
+20:   const [email, setEmail] = useState('');
+21:   const [name, setName] = useState('');
+22:   const [password, setPassword] = useState('');
+23:   const [newPassword, setNewPassword] = useState('');
+24:   const [resetToken, setResetToken] = useState('');
+25:   const [showPassword, setShowPassword] = useState(false);
+26:   const [loading, setLoading] = useState(false);
+27: 
+28:   const handleSubmit = async (e: React.FormEvent) => {
+29:     e.preventDefault();
+30:     setLoading(true);
+31:     try {
+32:       if (mode === 'register') {
+33:         if (!name.trim()) { toast.error('Please enter your name.'); setLoading(false); return; }
+34:         const res = await registerUser({ name, email, password });
+35:         if (res.msg === 'User registered' || res.user) {
+36:           toast.success('Account created! Please log in.');
+37:           setMode('login'); setLoading(false); return;
+38:         }
+39:         toast.error(res.msg || 'Registration failed.');
+40:       } else if (mode === 'login') {
+41:         const res = await loginUser({ email, password });
+42:         if (res.token) {
+43:           localStorage.setItem('token', res.token);
+44:           localStorage.setItem('user', JSON.stringify(res.user));
+45:           window.location.reload();
+46:         } else { toast.error(res.msg || 'Login failed.'); }
+47:       } else if (mode === 'forgot') {
+48:         const res = await fetch(API_BASE + '/auth/forgot-password', {
+49:           method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email })
+50:         });
+51:         const data = await res.json();
+52:         if (data.resetToken) { toast.success('Reset code: ' + data.resetToken, { duration: 30000 }); setMode('reset'); }
+53:         else toast.error(data.msg || 'Email not found.');
+54:       } else if (mode === 'reset') {
+55:         const res = await fetch(API_BASE + '/auth/reset-password', {
+56:           method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, resetToken, newPassword })
+57:         });
+58:         const data = await res.json();
+59:         if (data.msg === 'Password reset successfully') { toast.success('Password reset! Please log in.'); setMode('login'); }
+60:         else toast.error(data.msg || 'Reset failed.');
+61:       }
+62:     } catch { toast.error('Network error. Is the backend running?'); }
+63:     finally { setLoading(false); }
+64:   };
+65: 
+66:   return (
+67:     <div className="min-h-screen flex" style={{ background: 'linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 50%, #faf5ff 100%)' }}>
+68:       <Toaster position="top-right" richColors />
+69: 
+70:       {/* Aurora blobs */}
+71:       <div className="fixed inset-0 pointer-events-none overflow-hidden">
+72:         <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full opacity-40"
+73:           style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%)', animation: 'aurora-shift 12s ease-in-out infinite' }} />
+74:         <div className="absolute -bottom-40 -right-40 w-[400px] h-[400px] rounded-full opacity-30"
+75:           style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%)', animation: 'aurora-shift 15s ease-in-out infinite reverse' }} />
+76:       </div>
+77: 
+78:       {/* ── LEFT PANEL ── */}
+79:       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12">
+80:         <div className="relative z-10">
+81:           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 mb-16">
+82:             <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-xl"
+83:               style={{ background: 'linear-gradient(135deg, #8B5CF6, #6366F1, #3B82F6)', boxShadow: '0 8px 25px rgba(99,102,241,0.35)' }}>
+84:               <Shield className="w-6 h-6 text-white" />
+85:             </div>
+86:             <div>
+87:               <span className="font-display font-black text-xl" style={{ color: '#f4f4f5' }}>Civic Pillar</span>
+88:               <div className="flex items-center gap-1.5 mt-0.5">
+89:                 <Sparkles className="w-3 h-3" style={{ color: '#6366F1' }} />
+90:                 <span className="text-[10px] font-semibold" style={{ color: 'rgba(161,161,170,0.9)' }}>AI-Powered Platform</span>
+91:               </div>
+92:             </div>
+93:           </motion.div>
+94: 
+95:           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+96:             <h1 className="text-5xl font-display font-black leading-tight mb-5" style={{ color: '#f4f4f5' }}>
+97:               Making Cities<br />
+98:               <span className="text-gradient">Smarter</span><br />
+99:               Together
+100:             </h1>
+101:             <p className="text-lg font-medium leading-relaxed max-w-sm" style={{ color: 'rgba(161,161,170,1.0)' }}>
+102:               Report, track and resolve civic issues in your community with AI-powered verification.
+103:             </p>
+104:           </motion.div>
+105:         </div>
+106: 
+107:         {/* Feature cards */}
+108:         <div className="relative z-10 grid grid-cols-2 gap-3">
+109:           {features.map((f, i) => (
+110:             <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.08 }}
+111:               whileHover={{ y: -4, scale: 1.02 }}
+112:               className="rounded-2xl p-4 cursor-default"
+113:               style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 4px 16px rgba(99,102,241,0.06)' }}>
+114:               <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: f.bg }}>
+115:                 <f.icon className="w-4 h-4" style={{ color: f.color }} />
+116:               </div>
+117:               <p className="font-bold text-sm mb-0.5" style={{ color: '#f4f4f5' }}>{f.title}</p>
+118:               <p className="text-xs leading-relaxed" style={{ color: 'rgba(161,161,170,0.9)' }}>{f.desc}</p>
+119:             </motion.div>
+120:           ))}
+121:         </div>
+122: 
+123:         {/* Stats */}
+124:         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+125:           className="relative z-10 flex items-center gap-8 pt-6" style={{ borderTop: '1px solid rgba(99,102,241,0.1)' }}>
+126:           {[['10K+', 'Issues Resolved', '#6366F1'], ['98%', 'AI Accuracy', '#10B981'], ['24/7', 'Monitoring', '#8B5CF6']].map(([val, label, color]) => (
+127:             <div key={label}>
+128:               <p className="font-display font-black text-xl" style={{ color }}>{val}</p>
+129:               <p className="text-xs font-medium" style={{ color: 'rgba(161,161,170,0.9)' }}>{label}</p>
+130:             </div>
+131:           ))}
+132:         </motion.div>
+133:       </div>
+134: 
+135:       {/* ── RIGHT PANEL ── */}
+136:       <div className="w-full lg:w-1/2 flex items-center justify-center p-6">
+137:         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}
+138:           className="w-full max-w-sm">
+139: 
+140:           {/* Mobile logo */}
+141:           <div className="lg:hidden flex items-center gap-3 mb-8 justify-center">
+142:             <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg"
+143:               style={{ background: 'linear-gradient(135deg, #8B5CF6, #6366F1)', boxShadow: '0 4px 15px rgba(99,102,241,0.3)' }}>
+144:               <Shield className="w-5 h-5 text-white" />
+145:             </div>
+146:             <span className="font-display font-black text-xl" style={{ color: '#f4f4f5' }}>Civic Pillar</span>
+147:           </div>
+148: 
+149:           {/* Card */}
+150:           <div className="rounded-3xl p-8" style={{ background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 8px 40px rgba(99,102,241,0.1)' }}>
+151:             <AnimatePresence mode="wait">
+152:               {/* LOGIN / REGISTER */}
+153:               {(mode === 'login' || mode === 'register') && (
+154:                 <motion.div key="auth" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+155:                   <div className="mb-6">
+156:                     <h2 className="text-2xl font-display font-black mb-1" style={{ color: '#f4f4f5' }}>
+157:                       {mode === 'login' ? 'Welcome back 👋' : 'Join us today ✨'}
+158:                     </h2>
+159:                     <p className="text-sm" style={{ color: 'rgba(161,161,170,0.9)' }}>
+160:                       {mode === 'login' ? 'Sign in to your account' : 'Create your free account'}
+161:                     </p>
+162:                   </div>
+163: 
+164:                   {/* Toggle */}
+165:                   <div className="flex p-1 rounded-xl mb-6" style={{ background: 'rgba(99,102,241,0.06)' }}>
+166:                     {['login', 'register'].map(tab => (
+167:                       <button key={tab} onClick={() => setMode(tab as Mode)}
+168:                         className="flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 capitalize"
+169:                         style={mode === tab
+170:                           ? { background: 'white', color: '#6366F1', boxShadow: '0 2px 8px rgba(99,102,241,0.15)' }
+171:                           : { color: 'rgba(161,161,170,0.9)' }}>
+172:                         {tab === 'login' ? 'Login' : 'Register'}
+173:                       </button>
+174:                     ))}
+175:                   </div>
+176: 
+177:                   <form onSubmit={handleSubmit} className="space-y-4">
+178:                     <AnimatePresence>
+179:                       {mode === 'register' && (
+180:                         <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
+181:                           <div className="relative">
+182:                             <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
+183:                             <input type="text" placeholder="Full Name" value={name} onChange={e => setName(e.target.value)} className="input-field pl-11" />
+184:                           </div>
+185:                         </motion.div>
+186:                       )}
+187:                     </AnimatePresence>
+188:                     <div className="relative">
+189:                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
+190:                       <input type="email" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)} required className="input-field pl-11" />
+191:                     </div>
+192:                     <div className="relative">
+193:                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
+194:                       <input type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required className="input-field pl-11 pr-12" />
+195:                       <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors" style={{ color: 'rgba(161,161,170,0.7)' }}>
+196:                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+197:                       </button>
+198:                     </div>
+199:                     {mode === 'login' && (
+200:                       <div className="flex justify-end">
+201:                         <button type="button" onClick={() => setMode('forgot')} className="text-xs font-semibold transition-colors" style={{ color: '#6366F1' }}>Forgot password?</button>
+202:                       </div>
+203:                     )}
+204:                     <motion.button type="submit" disabled={loading} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}
+205:                       className="btn-primary w-full py-3.5 rounded-xl font-bold text-sm disabled:opacity-50 flex items-center justify-center gap-2 mt-2">
+206:                       {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <>{mode === 'register' ? 'Create Account' : 'Sign In'}<ArrowRight className="w-4 h-4" /></>}
+207:                     </motion.button>
+208:                   </form>
+209: 
+210:                   <p className="text-center text-sm mt-5" style={{ color: 'rgba(161,161,170,0.9)' }}>
+211:                     {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
+212:                     <button onClick={() => setMode(mode === 'login' ? 'register' : 'login')} className="font-bold transition-colors" style={{ color: '#6366F1' }}>
+213:                       {mode === 'login' ? 'Sign up' : 'Sign in'}
+214:                     </button>
+215:                   </p>
+216: 
+217:                   <div className="flex items-center justify-center gap-4 mt-5 pt-5" style={{ borderTop: '1px solid rgba(99,102,241,0.08)' }}>
+218:                     {['AI Verified', 'Secure', 'Free'].map(badge => (
+219:                       <div key={badge} className="flex items-center gap-1.5" style={{ color: 'rgba(161,161,170,0.9)' }}>
+220:                         <CheckCircle2 className="w-3.5 h-3.5" style={{ color: '#10B981' }} />
+221:                         <span className="text-xs font-medium">{badge}</span>
+222:                       </div>
+223:                     ))}
+224:                   </div>
+225:                 </motion.div>
+226:               )}
+227: 
+228:               {/* FORGOT */}
+229:               {mode === 'forgot' && (
+230:                 <motion.div key="forgot" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+231:                   <button onClick={() => setMode('login')} className="flex items-center gap-2 text-sm font-medium mb-6 transition-colors" style={{ color: 'rgba(161,161,170,0.9)' }}>
+232:                     <ArrowLeft className="w-4 h-4" /> Back
+233:                   </button>
+234:                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(99,102,241,0.1)' }}>
+235:                     <KeyRound className="w-6 h-6" style={{ color: '#6366F1' }} />
+236:                   </div>
+237:                   <h2 className="text-2xl font-display font-black mb-1" style={{ color: '#f4f4f5' }}>Forgot Password?</h2>
+238:                   <p className="text-sm mb-6" style={{ color: 'rgba(161,161,170,0.9)' }}>Enter your email to get a reset code.</p>
+239:                   <form onSubmit={handleSubmit} className="space-y-4">
+240:                     <div className="relative">
+241:                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
+242:                       <input type="email" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)} required className="input-field pl-11" />
+243:                     </div>
+244:                     <motion.button type="submit" disabled={loading} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}
+245:                       className="btn-primary w-full py-3.5 rounded-xl font-bold text-sm disabled:opacity-50 flex items-center justify-center gap-2">
+246:                       {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Send Reset Code <ArrowRight className="w-4 h-4" /></>}
+247:                     </motion.button>
+248:                   </form>
+249:                   <p className="text-center mt-4"><button onClick={() => setMode('reset')} className="text-xs font-semibold" style={{ color: '#6366F1' }}>Already have a code?</button></p>
+250:                 </motion.div>
+251:               )}
+252: 
+253:               {/* RESET */}
+254:               {mode === 'reset' && (
+255:                 <motion.div key="reset" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+256:                   <button onClick={() => setMode('forgot')} className="flex items-center gap-2 text-sm font-medium mb-6" style={{ color: 'rgba(161,161,170,0.9)' }}>
+257:                     <ArrowLeft className="w-4 h-4" /> Back
+258:                   </button>
+259:                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(16,185,129,0.1)' }}>
+260:                     <KeyRound className="w-6 h-6" style={{ color: '#10B981' }} />
+261:                   </div>
+262:                   <h2 className="text-2xl font-display font-black mb-1" style={{ color: '#f4f4f5' }}>Reset Password</h2>
+263:                   <p className="text-sm mb-6" style={{ color: 'rgba(161,161,170,0.9)' }}>Enter your reset code and new password.</p>
+264:                   <form onSubmit={handleSubmit} className="space-y-4">
+265:                     <div className="relative"><Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} /><input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required className="input-field pl-11" /></div>
+266:                     <div className="relative"><KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} /><input type="text" placeholder="Reset Code" value={resetToken} onChange={e => setResetToken(e.target.value.toUpperCase())} required className="input-field pl-11 tracking-widest" /></div>
+267:                     <div className="relative">
+268:                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(161,161,170,0.7)' }} />
+269:                       <input type={showPassword ? 'text' : 'password'} placeholder="New Password" value={newPassword} onChange={e => setNewPassword(e.target.value)} required className="input-field pl-11 pr-12" />
+270:                       <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(161,161,170,0.7)' }}>{showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}</button>
+271:                     </div>
+272:                     <motion.button type="submit" disabled={loading} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}
+273:                       className="w-full py-3.5 rounded-xl font-bold text-sm text-white disabled:opacity-50 flex items-center justify-center gap-2"
+274:                       style={{ background: 'linear-gradient(135deg, #10B981, #06B6D4)', boxShadow: '0 4px 15px rgba(16,185,129,0.3)' }}>
+275:                       {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Reset Password <ArrowRight className="w-4 h-4" /></>}
+276:                     </motion.button>
+277:                   </form>
+278:                 </motion.div>
+279:               )}
+280:             </AnimatePresence>
+281:           </div>
+282:         </motion.div>
+283:       </div>
+284:     </div>
+285:   );
+286: }

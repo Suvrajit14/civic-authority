@@ -1,0 +1,5 @@
+src/components/Auth.tsx(48,34): error TS1005: ';' expected.
+src/components/Auth.tsx(52,47): error TS1005: ';' expected.
+src/components/Auth.tsx(52,59): error TS1434: Unexpected keyword or identifier.
+src/components/Auth.tsx(55,34): error TS1005: ';' expected.
+src/components/Auth.tsx(287,1): error TS1160: Unterminated template literal.

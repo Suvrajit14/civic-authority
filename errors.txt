@@ -1,0 +1,9 @@
+src/components/Dashboard.tsx(352,55): error TS2322: Type '{ key: any; issue: any; user: UserProfile; }' is not assignable to type 'IssueCardProps'.
+  Property 'key' does not exist on type 'IssueCardProps'.
+src/components/ErrorBoundary.tsx(78,17): error TS2339: Property 'props' does not exist on type 'ErrorBoundary'.
+src/components/Profile.tsx(204,49): error TS2322: Type '{ key: any; issue: any; }' is not assignable to type 'IssueCardProps'.
+  Property 'key' does not exist on type 'IssueCardProps'.
+src/firebase.ts(1,31): error TS2307: Cannot find module 'firebase/app' or its corresponding type declarations.
+src/firebase.ts(2,151): error TS2307: Cannot find module 'firebase/auth' or its corresponding type declarations.
+src/firebase.ts(3,53): error TS2307: Cannot find module 'firebase/firestore' or its corresponding type declarations.
+src/i18n.tsx(15,56): error TS2503: Cannot find namespace 'React'.

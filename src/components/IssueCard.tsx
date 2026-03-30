@@ -7,7 +7,7 @@ import { auth } from '../currentUser';
 import { toast } from 'sonner';
 import { useI18n } from '../i18n';
 
-interface IssueCardProps { issue: IssueReport; user?: UserProfile | null; }
+interface IssueCardProps { issue: IssueReport; user?: UserProfile | null; key?: React.Key | null; }
 
 const STATUS: Record<string, { bg: string; text: string; dot: string; label: string }> = {
   Pending:       { bg: 'rgba(245,158,11,0.1)',  text: '#fbbf24', dot: '#f59e0b', label: 'Pending' },
