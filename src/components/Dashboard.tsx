@@ -123,10 +123,10 @@ export default function Dashboard({ user }: DashboardProps) {
   });
 
   const stats = [
-    { label: 'Total Reports', value: issues.length,                                      icon: TrendingUp,   color: '#6366F1', glow: 'rgba(99,102,241,0.2)',   bg: 'rgba(99,102,241,0.08)' },
-    { label: 'Verified',      value: issues.filter(i => i.status === 'Verified').length, icon: CheckCircle2, color: '#10B981', glow: 'rgba(16,185,129,0.2)',  bg: 'rgba(16,185,129,0.08)' },
-    { label: 'Pending',       value: issues.filter(i => i.status === 'Pending').length,  icon: Clock,        color: '#F59E0B', glow: 'rgba(245,158,11,0.2)',  bg: 'rgba(245,158,11,0.08)' },
-    { label: 'Active Users',  value: activeUsersCount ?? '...',                          icon: Users,        color: '#8B5CF6', glow: 'rgba(139,92,246,0.2)',  bg: 'rgba(139,92,246,0.08)' },
+    { label: t('dashboard.total_reports'), value: issues.length,                                      icon: TrendingUp,   color: '#6366F1', glow: 'rgba(99,102,241,0.2)',   bg: 'rgba(99,102,241,0.08)' },
+    { label: t('dashboard.verified'),      value: issues.filter(i => i.status === 'Verified').length, icon: CheckCircle2, color: '#10B981', glow: 'rgba(16,185,129,0.2)',  bg: 'rgba(16,185,129,0.08)' },
+    { label: t('dashboard.pending'),       value: issues.filter(i => i.status === 'Pending').length,  icon: Clock,        color: '#F59E0B', glow: 'rgba(245,158,11,0.2)',  bg: 'rgba(245,158,11,0.08)' },
+    { label: t('dashboard.active_users'),  value: activeUsersCount ?? '...',                          icon: Users,        color: '#8B5CF6', glow: 'rgba(139,92,246,0.2)',  bg: 'rgba(139,92,246,0.08)' },
   ];
 
   const center: [number, number] = userLocation ?? (filteredIssues.length > 0
@@ -182,7 +182,7 @@ export default function Dashboard({ user }: DashboardProps) {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#6366F1', boxShadow: '0 0 8px rgba(99,102,241,0.5)' }} />
-              <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#6366F1' }}>Live Feed</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#6366F1' }}>{t('dashboard.live_feed')}</span>
             </div>
             <h1 className="text-2xl font-display font-black text-white">
               Civic <span className="text-gradient">Intelligence</span>
@@ -193,12 +193,12 @@ export default function Dashboard({ user }: DashboardProps) {
               <button onClick={() => setViewMode('grid')}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all"
                 style={viewMode === 'grid' ? { background: 'rgba(0,255,136,0.15)', color: '#00FF88' } : { color: 'rgba(255,255,255,0.4)' }}>
-                <ListIcon className="w-3.5 h-3.5" /> Grid
+                <ListIcon className="w-3.5 h-3.5" /> {t('dashboard.grid_view')}
               </button>
               <button onClick={() => setViewMode('map')}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all"
                 style={viewMode === 'map' ? { background: 'rgba(0,212,255,0.15)', color: '#00D4FF' } : { color: 'rgba(255,255,255,0.4)' }}>
-                <MapIcon className="w-3.5 h-3.5" /> Map
+                <MapIcon className="w-3.5 h-3.5" /> {t('dashboard.map_view')}
               </button>
             </div>
             <button onClick={() => handleLocateMe(false)} disabled={isLocating}
@@ -207,7 +207,7 @@ export default function Dashboard({ user }: DashboardProps) {
                 ? { background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.25)' }
                 : { background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.08)' }}>
               {isLocating ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <MapPin className="w-3.5 h-3.5" />}
-              {userLocation ? locationAddress || 'Located' : 'Near Me'}
+              {userLocation ? locationAddress || t('dashboard.you_are_here') : t('dashboard.near_me_active')}
             </button>
           </div>
         </div>
@@ -274,13 +274,21 @@ export default function Dashboard({ user }: DashboardProps) {
           {['All', 'Pending', 'Verified', 'In Progress', 'Resolved', 'Rejected'].map(s => {
             const neon = STATUS_NEON[s];
             const isActive = statusFilter === s;
+            const statusLabel: Record<string, string> = {
+              All: t('dashboard.total_reports') ? t('nav.dashboard') && 'All' : 'All',
+              Pending: t('dashboard.pending'),
+              Verified: t('dashboard.verified'),
+              'In Progress': t('dashboard.in_progress'),
+              Resolved: t('dashboard.resolved'),
+              Rejected: t('dashboard.rejected'),
+            };
             return (
               <button key={s} onClick={() => setStatusFilter(s)}
                 className="px-3.5 py-1.5 rounded-lg text-[11px] font-bold whitespace-nowrap transition-all"
                 style={isActive
                   ? { background: neon.bg, color: neon.color, border: `1px solid ${neon.color}40` }
                   : { background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                {s === 'All' ? 'All Status' : s}
+                {statusLabel[s] || s}
               </button>
             );
           })}
@@ -330,7 +338,7 @@ export default function Dashboard({ user }: DashboardProps) {
 
       {/* Content */}
       {loading ? (
-        <div className="h-64 flex items-center justify-center"><LoadingSpinner label="Loading reports..." /></div>
+        <div className="h-64 flex items-center justify-center"><LoadingSpinner label={t('dashboard.syncing')} /></div>
       ) : viewMode === 'grid' ? (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -344,7 +352,7 @@ export default function Dashboard({ user }: DashboardProps) {
               style={showFake
                 ? { background: 'rgba(255,60,172,0.15)', color: '#FF3CAC', border: '1px solid rgba(255,60,172,0.3)' }
                 : { background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <ShieldAlert className="w-3 h-3" /> {showFake ? 'Hide Fake' : 'Show Fake'}
+              <ShieldAlert className="w-3 h-3" /> {showFake ? t('dashboard.verified') + ' ✓' : 'Show Fake'}
             </button>
           </div>
           {filteredIssues.length > 0 ? (
@@ -354,8 +362,8 @@ export default function Dashboard({ user }: DashboardProps) {
           ) : (
             <div className="h-64 flex flex-col items-center justify-center rounded-2xl" style={{ border: '1px dashed rgba(255,255,255,0.1)' }}>
               <AlertCircle className="w-10 h-10 mb-3" style={{ color: 'rgba(255,255,255,0.15)' }} />
-              <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.3)' }}>No reports found</p>
-              <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.2)' }}>Try adjusting your filters</p>
+              <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.3)' }}>{t('dashboard.no_intelligence')}</p>
+              <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.2)' }}>{t('dashboard.load_more')}</p>
             </div>
           )}
         </div>
@@ -364,7 +372,7 @@ export default function Dashboard({ user }: DashboardProps) {
           <MapContainer center={center} zoom={12} scrollWheelZoom className="h-full w-full z-0">
             <ChangeView issues={filteredIssues} userLocation={userLocation} />
             <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            {userLocation && <Marker position={userLocation}><Popup><p className="font-bold text-xs" style={{ color: '#00FF88' }}>You are here</p></Popup></Marker>}
+            {userLocation && <Marker position={userLocation}><Popup><p className="font-bold text-xs" style={{ color: '#00FF88' }}>{t('dashboard.you_are_here')}</p></Popup></Marker>}
             {filteredIssues.map(issue => (
               <Marker key={issue.id} position={[issue.latitude, issue.longitude]}>
                 <Popup>
